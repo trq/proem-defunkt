@@ -12,5 +12,20 @@ r. ME proheme < MF < L, as above
 —Related forms
 pro·e·mi·al  /proʊˈimiəl, -ˈɛmi-/ Show Spelled[proh-ee-mee-uhl, -em-ee-] Show IPA, adjective
 
-----------------------------------------------------------------------------------------------
-A small, simple, PHP MVC.
+..............................................................................................
+
+The start of a small, simple, PHP MVC.
+
+
+The main objective here is to create a small, simple, fast PHP MVC framework. I am convinced
+with the idea of designing an application object around the idea of the filter chain pattern.
+
+A request comes in which initiates the chain, filters the request data while building all of
+the resources required to respond. The response is then filtered and built back out through
+the chain and off to the client. Simple, in theory.
+
+After attending an awesome SCRUM presentation a few months back and then backing that up more
+recently with another on TDD I am also determined to go about this project in a very `Agile`
+fashion.
+
+..............................................................................................
