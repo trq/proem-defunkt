@@ -1,15 +1,17 @@
 <?php
+
+namespace Proem;
 /**
  * @category   Proem
- * @package    Proem_Loader
+ * @package    Proem\Loader
  */
 
 /**
- * @package    Proem_Loader
+ * @package    Proem\Loader
  *
  * An simple spl_autoload_register wrapper.
  */
-class Proem_Loader
+class Loader
 {
     /**
      * @var Origin_Loader
@@ -72,7 +74,7 @@ class Proem_Loader
      */
     public function registerAutoload()
     {
-        return spl_autoload_register(array('Proem_Loader', 'load'));
+        return spl_autoload_register(array('Proem\Loader', 'load'));
     }
 
     /**
@@ -81,6 +83,8 @@ class Proem_Loader
      */
     private function _doLoad($class)
     {
-        require_once str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+        $class = ltrim($class, '\\');
+        require_once str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+        //require_once str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
     }
 }

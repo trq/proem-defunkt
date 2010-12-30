@@ -7,6 +7,6 @@ class Proem_ProemTest extends PHPUnit_Framework_TestCase
 {
     public function testVersion()
     {
-        $this->assertEquals('0.0.1', Proem_Proem::VERSION);
+        $this->assertEquals('0.0.1', Proem\Proem::VERSION);
     }
 }

@@ -7,13 +7,13 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
 {
     public function testGetInstance()
     {
-        $loader = Proem_Loader::getInstance();
-        $this->assertType('Proem_Loader', $loader);
+        $loader = Proem\Loader::getInstance();
+        $this->assertType('Proem\Loader', $loader);
     }
 
     public function testAddExistingPath()
     {
-        $loader = Proem_Loader::getInstance();
+        $loader = Proem\Loader::getInstance();
 
         $loader->addPath('/home');
         $this->assertTrue(
@@ -23,7 +23,7 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
 
     public function testAddNonExistingPath()
     {
-        $loader = Proem_Loader::getInstance();
+        $loader = Proem\Loader::getInstance();
 
         $loader->addPath('/foo');
         $this->assertFalse(
@@ -33,8 +33,8 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
 
     public function testCanLoad()
     {
-        $loader = Proem_Loader::getInstance();
+        $loader = Proem\Loader::getInstance();
         $loader->addPath('lib'); //adds the Proem/lib directory.
-        $loader->load('Proem_Proem');
+        $loader->load('Proem\Proem');
     }
 }
