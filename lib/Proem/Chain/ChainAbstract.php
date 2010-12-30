@@ -1,6 +1,6 @@
 <?php
 
-namespace Proem\Event;
+namespace Proem\Chain;
 
 abstract class ChainAbstract
 {

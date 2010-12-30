@@ -1,10 +1,10 @@
 <?php
 
-namespace Proem\Event;
+namespace Proem;
 
-require_once 'ChainAbstract.php';
+require_once 'Chain/ChainAbstract.php';
 
-class Chain extends ChainAbstract
+class Chain extends Chain\ChainAbstract
 {
     public function run() {}
 }

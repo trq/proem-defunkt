@@ -14,10 +14,10 @@ class Application
 
     public function __construct()
     {
-        $this->setChain(new Event\Chain);
+        $this->setChain(new Chain);
     }
 
-    public function setChain(Event\ChainAbstract $chain)
+    public function setChain(Chain\ChainAbstract $chain)
     {
         $this->_chain = $chain;
     }
