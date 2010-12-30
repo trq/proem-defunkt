@@ -25,3 +25,7 @@ recently with another on TDD I am also determined to go about this project in a 
 fashion.
 
 ..............................................................................................
+
+All Unit tests should be executed from within the root Proem directory using:
+
+./bin/runtests
