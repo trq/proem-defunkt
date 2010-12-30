@@ -18,7 +18,7 @@ class Proem_ApplicationTest extends PHPUnit_Framework_TestCase
     public function testChainIsAvailable()
     {
         $this->assertType(
-            'Proem\Event\Chain',
+            'Proem\Event\ChainAbstract',
             $this->_application->getChain()
         );
     }

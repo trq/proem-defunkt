@@ -8,7 +8,16 @@ class Application
 
     private $_chain;
 
-    public function __construct(Event\Chain $chain)
+    private $_request;
+
+    private $_response;
+
+    public function __construct()
+    {
+        $this->setChain(new Event\Chain);
+    }
+
+    public function setChain(Event\ChainAbstract $chain)
     {
         $this->_chain = $chain;
     }
@@ -16,6 +25,28 @@ class Application
     public function getChain()
     {
         return $this->_chain;
+    }
+
+    public function setRequest(IO\RequestAbstract $request)
+    {
+        $this->_request = $request;
+        return $this;
+    }
+
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+    public function setResponse(IO\ResponseAbstract $response)
+    {
+        $this->_request = $response;
+        return $this;
+    }
+
+    public function getResponse()
+    {
+        return $this->_response;
     }
 
     public function setResource($name, $item)
@@ -30,12 +61,6 @@ class Application
             return $this->_resources[$name];
         }
         return false;
-    }
-
-    public function run()
-    {
-        $this->getChain()->run();
-        return $this;
     }
 
 }
