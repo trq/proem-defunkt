@@ -4,6 +4,8 @@ namespace Proem;
 
 class Application
 {
+    private static $_instance = null;
+
     private $_resources = array();
 
     private $_chain;
@@ -12,14 +14,25 @@ class Application
 
     private $_response;
 
-    public function __construct()
+    public static function getInstance ()
     {
-        $this->setChain(new Chain);
+        if (is_null(self::$_instance)) {
+            $class = __CLASS__;
+            self::$_instance = new $class;
+        }
+        self::$_instance->setChain(new Chain(self));
+        return self::$_instance;
+    }
+
+    private function __construct()
+    {
+        $this->setChain(new Chain($this));
     }
 
     public function setChain(Chain\ChainAbstract $chain)
     {
         $this->_chain = $chain;
+        return self::$_instance;
     }
 
     public function getChain()
@@ -30,7 +43,7 @@ class Application
     public function setRequest(IO\RequestAbstract $request)
     {
         $this->_request = $request;
-        return $this;
+        return self::$_instance;
     }
 
     public function getRequest()
@@ -41,7 +54,7 @@ class Application
     public function setResponse(IO\ResponseAbstract $response)
     {
         $this->_request = $response;
-        return $this;
+        return self::$_instance;
     }
 
     public function getResponse()
@@ -52,7 +65,7 @@ class Application
     public function setResource($name, $item)
     {
         $this->_resources[$name] = $item;
-        return $this;
+        return self::$_instance;
     }
 
     public function getResource($name)

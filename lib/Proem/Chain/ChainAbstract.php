@@ -6,23 +6,32 @@ abstract class ChainAbstract
 {
     protected $_events = array();
 
-    protected function registerEvent($event, $object, $params = array()) {
-        $this->_events[] = array(
-            'Event' => $event,
-            'Object' => $object,
-            'Params' => $params
-        );
+    public function registerEvent($event, Event\EventAbstract $object) {
+        $this->_events[$event] = $object;
+        return $this;
     }
 
-    protected function registerEvents(Array $events) {
-        foreach ($events as $event => $detail) {
-            $this->registerEvent(
-                $detail['Event'],
-                $detail['Object'],
-                $detail['Params']
-            );
+    public function registerEvents(Array $events) {
+        foreach ($events as $event => $object) {
+            $this->registerEvent($event, $object);
         }
+        return $this;
     }
 
-    abstract public function run();
+    public function getEvents()
+    {
+        return $this->_events;
+    }
+
+    public function getInitialEvent()
+    {
+        return reset($this->_events);
+    }
+
+    public function getNextEvent()
+    {
+        return next($this->_events);
+    }
+
+    public abstract function run();
 }
