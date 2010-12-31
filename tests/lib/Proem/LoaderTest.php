@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Loader.php';
 
 class Proem_LoaderTest extends PHPUnit_Framework_TestCase
@@ -8,7 +8,7 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
     public function testGetInstance()
     {
         $loader = Proem\Loader::getInstance();
-        $this->assertType('Proem\Loader', $loader);
+        $this->assertInstanceOf('Proem\Loader', $loader);
     }
 
     public function testAddExistingPath()

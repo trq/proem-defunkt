@@ -1,6 +1,6 @@
 <?php
 
-require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Application.php';
 require_once 'lib/Proem/Chain.php';
 
@@ -12,12 +12,12 @@ class Proem_ApplicationTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_application = new Proem\Application(new Proem\Chain);
+        $this->_application = Proem\Application::getInstance();
     }
 
     public function testChainIsAvailable()
     {
-        $this->assertType(
+        $this->assertInstanceOf(
             'Proem\Chain\ChainAbstract',
             $this->_application->getChain()
         );
