@@ -10,7 +10,7 @@ r. ME proheme < MF < L, as above
 
 ..............................................................................................
 
-The start of a small, simple, PHP MVC.
+A small, simple, PHP MVC.
 
 
 The main objective here is to create a small, simple, fast PHP MVC framework. I am convinced
@@ -20,11 +20,13 @@ A request comes in which initiates the chain, filters the request data while bui
 the resources required to respond. The response is then filtered and built back out through
 the chain and off to the client. Simple, in theory.
 
-After attending an awesome SCRUM presentation a few months back and then backing that up more
-recently with another on TDD I am also determined to go about this project in a very `Agile`
-fashion.
-
 ..............................................................................................
+
+Installation is simple. Place the root Proem directory wherever you like and insure that the
+lib directory is on php's include_path. That's it!
+
+If you want to fork Proem go ahead. I would appreciate push requests but will only exacept code
+that has sufficient passing unit tests.
 
 All Unit tests should be executed from within the root Proem directory using:
 
