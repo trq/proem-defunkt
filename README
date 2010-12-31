@@ -25,8 +25,8 @@ the chain and off to the client. Simple, in theory.
 Installation is simple. Place the root Proem directory wherever you like and insure that the
 lib directory is on php's include_path. That's it!
 
-If you want to fork Proem go ahead. I would appreciate push requests but will only exacept code
-that has sufficient passing unit tests.
+If you want to fork Proem go ahead. I would appreciate requests but will only pull code that
+has sufficient & passing unit tests.
 
 All Unit tests should be executed from within the root Proem directory using:
 
