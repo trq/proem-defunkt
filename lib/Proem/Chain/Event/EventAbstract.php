@@ -8,7 +8,7 @@ abstract class EventAbstract
 
     public abstract function out();
 
-    final function run(\Proem\Chain &$chain)
+    final function run(\Proem\Chain $chain)
     {
         $this->in();
         $event = $chain->getNextEvent();
