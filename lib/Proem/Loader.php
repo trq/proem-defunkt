@@ -83,8 +83,7 @@ class Loader
      */
     private function _doLoad($class)
     {
-        $class = ltrim($class, '\\');
-        require_once str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-        //require_once str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+        $class = ltrim($class, '\\_');
+        require_once str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class) . '.php';
     }
 }
