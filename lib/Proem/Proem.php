@@ -1,14 +1,25 @@
 <?php
-namespace Proem;
+
 /**
  * @category   Proem
- * @package    Proem_Proem
+ * @package    Proem\Proem
  */
 
 /**
- * @package    Proem_Proem
+ * @namespace
+ */
+namespace Proem;
+
+/**
+ * A simple class designed to store version information.
  *
- * A place to store framework version information.
+ * I really only built this because I needed a class within the framework
+ * the could be used to test the Proem\Loader.
+ *
+ * @todo Class could likely be removed.
+ * 
+ * @category   Proem
+ * @package    Proem\Proem
  */
 class Proem
 {

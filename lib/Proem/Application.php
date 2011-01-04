@@ -6,8 +6,8 @@
  */
 
 /**
-* @namespace
-*/
+ * @namespace
+ */
 namespace Proem;
 
 /**

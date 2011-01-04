@@ -10,8 +10,6 @@
  */
 namespace Proem;
 
-//require_once 'Chain/AbstractChain.php';
-
 /**
  * A concrete Proem\Chain\AbstractChain implementation.
  *
