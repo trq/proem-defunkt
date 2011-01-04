@@ -136,7 +136,7 @@ class Application
      */
     public function setResponse(IO\AbstractResponse $response)
     {
-        $this->_request = $response;
+	$this->_response = $response;
         return self::$_instance;
     }
 
@@ -159,7 +159,7 @@ class Application
      */
     public function setResource($name, $item)
     {
-        $this->_resources[$name] = $item;
+	$this->_resources[$name] = $item;
         return self::$_instance;
     }
 
