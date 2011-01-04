@@ -1,15 +1,21 @@
 <?php
 
-namespace Proem;
 /**
  * @category   Proem
  * @package    Proem\Loader
  */
 
 /**
+ * @namespace
+ */
+namespace Proem;
+
+/**
+ * @category   Proem
  * @package    Proem\Loader
  *
- * An simple spl_autoload_register wrapper.
+ * A simple spl_autoload wrapper.
+ * @link http://php.net/spl_autoload
  */
 class Loader
 {
