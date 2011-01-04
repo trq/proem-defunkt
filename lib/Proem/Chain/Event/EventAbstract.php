@@ -2,7 +2,7 @@
 
 namespace Proem\Chain\Event;
 
-abstract class EventAbstract
+abstract class AbstractEvent
 {
     public abstract function in();
 

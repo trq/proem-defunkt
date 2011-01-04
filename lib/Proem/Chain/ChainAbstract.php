@@ -2,11 +2,11 @@
 
 namespace Proem\Chain;
 
-abstract class ChainAbstract
+abstract class AbstractChain
 {
     protected $_events = array();
 
-    public function registerEvent($event, Event\EventAbstract $object) {
+    public function registerEvent($event, Event\AbstractEvent $object) {
         $this->_events[$event] = $object;
         return $this;
     }

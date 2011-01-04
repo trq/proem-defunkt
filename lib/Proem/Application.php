@@ -29,7 +29,7 @@ class Application
         $this->setChain(new Chain($this));
     }
 
-    public function setChain(Chain\ChainAbstract $chain)
+    public function setChain(Chain\AbstractChain $chain)
     {
         $this->_chain = $chain;
         return self::$_instance;
@@ -40,7 +40,7 @@ class Application
         return $this->_chain;
     }
 
-    public function setRequest(IO\RequestAbstract $request)
+    public function setRequest(IO\AbstractRequest $request)
     {
         $this->_request = $request;
         return self::$_instance;
@@ -51,7 +51,7 @@ class Application
         return $this->_request;
     }
 
-    public function setResponse(IO\ResponseAbstract $response)
+    public function setResponse(IO\AbstractResponse $response)
     {
         $this->_request = $response;
         return self::$_instance;
