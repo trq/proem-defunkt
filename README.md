@@ -21,7 +21,7 @@ the chain and off to the client. Simple, in theory.
 ## INSTALLATION
 
 Installation is simple. Place the root Proem directory wherever you like and insure that the
-lib directory is on php's include_path. That's it!
+lib directory is on php's include_path. That's it !
 
 ## DEVELOPMENT
 
