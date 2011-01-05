@@ -15,9 +15,9 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
     {
         $loader = Proem\Loader::getInstance();
 
-        $loader->addPath('/home');
+        $loader->addPath('.');
         $this->assertTrue(
-            in_array('/home', explode(PATH_SEPARATOR, get_include_path()))
+            in_array('.', explode(PATH_SEPARATOR, get_include_path()))
         );
     }
 
@@ -25,9 +25,9 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
     {
         $loader = Proem\Loader::getInstance();
 
-        $loader->addPath('/foo');
+        $loader->addPath('/somepaththatshouldntexist');
         $this->assertFalse(
-            in_array('/foo', explode(PATH_SEPARATOR, get_include_path()))
+            in_array('/somepaththatshouldntexist', explode(PATH_SEPARATOR, get_include_path()))
         );
     }
 
