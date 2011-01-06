@@ -1,9 +1,9 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
-require_once 'lib/Proem/IO/Response/AbstractResponse.php';
+require_once 'lib/Proem/IO/Response.php';
 
-class Proem_AbstractResponseTest extends PHPUnit_Framework_TestCase
+class Proem_ResponseTest extends PHPUnit_Framework_TestCase
 {
     private $_response;
 
@@ -11,15 +11,13 @@ class Proem_AbstractResponseTest extends PHPUnit_Framework_TestCase
     {
 	parent::setUp();
 
-	$this->_response = $this->getMockForAbstractClass(
-            'Proem\IO\Response\AbstractResponse'
-        );
+	$this->_response = new Proem\IO\Response;
     }
 
     public function testCanSetAndGetBody()
     {
 	$this->assertInstanceOf(
-            'Proem\IO\Response\AbstractResponse',
+            'Proem\IO\Response',
             $this->_response->setBody('foo')
         );
 

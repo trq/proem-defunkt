@@ -1,9 +1,9 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
-require_once 'lib/Proem/IO/Request/AbstractRequest.php';
+require_once 'lib/Proem/IO/Request.php';
 
-class Proem_AbstractRequestTest extends PHPUnit_Framework_TestCase
+class Proem_RequestTest extends PHPUnit_Framework_TestCase
 {
     private $_request;
 
@@ -11,15 +11,13 @@ class Proem_AbstractRequestTest extends PHPUnit_Framework_TestCase
     {
 	parent::setUp();
 
-	$this->_request = $this->getMockForAbstractClass(
-            'Proem\IO\Request\AbstractRequest'
-        );
+	$this->_request = new Proem\IO\Request;
     }
 
     public function testCanSetAndGetController()
     {
 	$this->assertInstanceOf(
-            'Proem\IO\Request\AbstractRequest',
+            'Proem\IO\Request',
             $this->_request->setController('foo')
         );
         
@@ -29,7 +27,7 @@ class Proem_AbstractRequestTest extends PHPUnit_Framework_TestCase
     public function testCanSetAndGetAction()
     {
 	$this->assertInstanceOf(
-            'Proem\IO\Request\AbstractRequest',
+            'Proem\IO\Request',
             $this->_request->setAction('foo')
         );
 
@@ -39,7 +37,7 @@ class Proem_AbstractRequestTest extends PHPUnit_Framework_TestCase
     public function testCanGetAndSetSingleParam()
     {
         $this->assertInstanceOf(
-            'Proem\IO\Request\AbstractRequest',
+            'Proem\IO\Request',
             $this->_request->setParam('foo', 'bar')
         );
 
@@ -60,7 +58,7 @@ class Proem_AbstractRequestTest extends PHPUnit_Framework_TestCase
     public function testCanGetAndSetMultipleParams()
     {
         $this->assertInstanceOf(
-            'Proem\IO\Request\AbstractRequest',
+            'Proem\IO\Request',
             $this->_request->setParams(
                 array(
                     'foo' => 'bar',
