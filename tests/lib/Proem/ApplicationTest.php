@@ -14,7 +14,7 @@ class Proem_ApplicationTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->_application = Proem\Application::getInstance();
+        $this->_application = new Proem\Application;
     }
 
     public function testChainIsAvailable()

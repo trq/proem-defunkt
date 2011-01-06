@@ -1,6 +1,7 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
+require_once 'lib/Proem/Application.php';
 require_once 'lib/Proem/Chain/AbstractChain.php';
 require_once 'lib/Proem/Chain/Event/AbstractEvent.php';
 require_once 'lib/Proem/Chain.php';
@@ -8,7 +9,7 @@ require_once 'lib/Proem/Chain.php';
 class Proem_ChainTest extends PHPUnit_Framework_TestCase
 {
     public function testCanRegisterSingleEvent() {
-        $chain = new Proem\Chain;
+        $chain = new Proem\Chain(new Proem\Application);
 
         $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
 
@@ -18,7 +19,7 @@ class Proem_ChainTest extends PHPUnit_Framework_TestCase
     }
 
     public function testCanRegisterMultipleEvents() {
-        $chain = new Proem\Chain;
+        $chain = new Proem\Chain(new Proem\Application);
 
         $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
         $response = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
@@ -39,7 +40,7 @@ class Proem_ChainTest extends PHPUnit_Framework_TestCase
     }
 
     public function testChainRun() {
-        $chain = new Proem\Chain;
+        $chain = new Proem\Chain(new Proem\Application);
 
         $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
         $request->expects($this->once())->method('in','out');
