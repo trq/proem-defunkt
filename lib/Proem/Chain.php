@@ -21,8 +21,8 @@ class Chain extends Chain\AbstractChain
     /**
      * Start the Chain in motion.
      */
-    public function run() {
+    public function run(\Proem\Application $application) {
         $event = $this->getInitialEvent();
-        $event->run($this);
+        $event->run($this, $application);
     }
 }

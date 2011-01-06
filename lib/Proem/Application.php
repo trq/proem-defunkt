@@ -57,29 +57,9 @@ class Application
     private $_response;
 
     /**
-     * Retrieve an instance of Proem\Application
-     *
-     * @return Proem\Application
-     * @todo Would like to remove this singleton asap.
-     */
-    public static function getInstance ()
-    {
-        if (is_null(self::$_instance)) {
-            $class = __CLASS__;
-            self::$_instance = new $class;
-        }
-        self::$_instance->setChain(new Chain(self));
-        return self::$_instance;
-    }
-
-    /**
      * Create a Chain object once instantiated.
-     *
-     * @todo This should probably also go. Even though we can override this
-     * object latter, I don't like it being so tightly coupled with
-     * proem\Application.
      */
-    private function __construct()
+    public function __construct()
     {
         $this->setChain(new Chain($this));
     }
@@ -93,7 +73,7 @@ class Application
     public function setChain(Chain\AbstractChain $chain)
     {
         $this->_chain = $chain;
-        return self::$_instance;
+        return $this;
     }
 
     /**
@@ -107,6 +87,19 @@ class Application
     }
 
     /**
+     * A simple proxy through to the Chain's run() method.
+     *
+     * This is really only here to make the boostrap process
+     * look nice and clean.
+     *
+     * @return void
+     */
+    public function run()
+    {
+	$this->getChain()->run($this);
+    }
+
+    /**
      * Set the Request object.
      *
      * @param IO\AbstractRequest $request
@@ -115,7 +108,7 @@ class Application
     public function setRequest(IO\AbstractRequest $request)
     {
         $this->_request = $request;
-        return self::$_instance;
+        return $this;
     }
 
     /**
@@ -137,7 +130,7 @@ class Application
     public function setResponse(IO\AbstractResponse $response)
     {
 	$this->_response = $response;
-        return self::$_instance;
+        return $this;
     }
 
     /**
@@ -160,7 +153,7 @@ class Application
     public function setResource($name, $item)
     {
 	$this->_resources[$name] = $item;
-        return self::$_instance;
+        return $this;
     }
 
     /**

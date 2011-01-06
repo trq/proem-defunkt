@@ -22,12 +22,12 @@ abstract class AbstractEvent
     /**
      * Method to be called on the way in the Chain
      */
-    public abstract function in();
+    public abstract function in(\Proem\Application $application);
 
     /**
      * Method to be called on the way out of the Chain.
      */
-    public abstract function out();
+    public abstract function out(\Proem\Application $application);
 
     /**
      * This method will execute in() -> the next event in the chain -> out().
@@ -35,14 +35,14 @@ abstract class AbstractEvent
      * @param \Proem\Chain $chain
      * @return AbstractEvent
      */
-    final function run(\Proem\Chain $chain)
+    final function run(\Proem\Chain $chain, \Proem\Application $application)
     {
-        $this->in();
+        $this->in($application);
         $event = $chain->getNextEvent();
         if ($event) {
-            $event->run($chain);
+            $event->run($chain, $application);
         }
-        $this->out();
+        $this->out($application);
         return $this;
     }
 

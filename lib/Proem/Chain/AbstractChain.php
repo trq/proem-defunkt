@@ -84,5 +84,5 @@ abstract class AbstractChain
     /**
      * Start the Chain in motion.
      */
-    public abstract function run();
+    public abstract function run(\Proem\Application $application);
 }
