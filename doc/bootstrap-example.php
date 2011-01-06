@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is just a running example of what a bootstrap file
  * might look like to get an application built on top of
