@@ -25,18 +25,12 @@ class Fixed extends AbstractRoute
 {
     public function process($uri, $options = array())
     {
-        if (
-            !array_key_exists('controller', $options) ||
-            !array_key_exists('action', $options)
-        ) {
-            throw new \Proem\Exception(
-                'Invalid options array passed to Proem\Controller\Route\Fixed'
-            );
-        }
+        $controller = array_key_exists('controller', $options) ? $options['controller'] : 'index';
+        $action = array_key_exists('controller', $options) ? $options['controller'] : 'index';
 
         $this->setMatchFound();
-        $this->setParam('controller', $options['controller']);
-        $this->setParam('action', $options['action']);
+        $this->setParam('controller', $controller);
+        $this->setParam('action', $action);
         $this->setParam('params', $uri);
     }
 }

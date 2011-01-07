@@ -26,11 +26,11 @@ abstract class AbstractRoute
     protected $_matched = false;
 
     /**
-     * Store all matched parameters
+     * Store matched parameters
      *
      * @var array
      */
-    protected $_params;
+    protected $_params = array();
 
     /**
      * Was a match found?

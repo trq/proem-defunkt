@@ -21,5 +21,18 @@ namespace Proem\Controller\Route;
  */
 class Standard extends AbstractRoute
 {
-    public function process() {}
+    public function process($uri, $options = array()) {
+        $pattern = '@\/([a-zA-Z0-9_\+\-%]+)*\/*([a-zA-Z0-9_\+\-%]+)*\/*([a-zA-Z0-9_\+\-%\/]+)*@';
+        if (preg_match($pattern, $uri, $matches)) {
+            $this->setMatchFound();
+            $this->setParam('controller', $matches[1]);
+            $this->setParam('action', $matches[2]);
+
+            if (isset($matches[3])) {
+                $this->setParam('params', explode('/', trim($matches[3], '/')));
+            } else {
+                $this->setParam('params', array());
+            }
+        }
+    }
 }
