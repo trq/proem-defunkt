@@ -1,7 +1,8 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
-require_once 'lib/Proem/Controller/Route/Command.php';
+require_once 'lib/Proem/Controller/Command/AbstractCommand.php';
+require_once 'lib/Proem/Controller/Command.php';
 require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
 require_once 'lib/Proem/Controller/Route/Fixed.php';
 

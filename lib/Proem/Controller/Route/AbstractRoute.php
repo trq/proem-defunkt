@@ -37,7 +37,7 @@ abstract class AbstractRoute
      */
     public function __construct()
     {
-        $this->_command = new Command;
+        $this->_command = new \Proem\Controller\Command;
     }
 
     /**
