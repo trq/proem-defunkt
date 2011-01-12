@@ -2,6 +2,7 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Exception.php';
+require_once 'lib/Proem/Controller/Route/Command.php';
 require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
 require_once 'lib/Proem/Controller/Route/Standard.php';
 
@@ -13,25 +14,12 @@ class ProemControllerRouteStandardTest extends PHPUnit_Framework_TestCase
     {
         $this->_route = new Proem\Controller\Route\Standard;
         $this->_route->process('/foo/bar/a/b');
-        print_r($this->_route->getParams());
     }
 
     public function testParamKeysExist()
     {
-        /*
-        $this->assertArrayHasKey(
-            'controller', $this->_route->getParams()
-        );
-
-        $this->assertArrayHasKey(
-            'action', $this->_route->getParams()
-        );
-
-        $this->assertArrayHasKey(
-            'params', $this->_route->getParams()
-        );*/
-
-        //print_r($this->_route->getParams());
-
+        $this->assertEquals('foo', $this->_route->getCommand()->controller);
+        $this->assertEquals('bar', $this->_route->getCommand()->action);
+        $this->assertEquals('a/b', $this->_route->getCommand()->params);
     }
 }
