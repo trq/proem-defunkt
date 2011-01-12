@@ -66,81 +66,71 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testSeriesOfMappedRoutes()
+    public function dataProvider()
     {
-        $urls = array('/', '/login', '/logout', '/profile/view/thorpe', '/users/view/12');
+        return array(
+            array('/', 'home', null, array()),
+            array('/login', 'auth', 'login', array()),
+            array('/logout', 'auth', 'logout', array())
+         );
+    }
 
-        for ($i = 0; $i <= 4; $i++) {
-            $router = new \Proem\Controller\Router($urls[$i]);
-            $command = $router
-            ->map(
-                'home-page',
-                new \Proem\Controller\Route\Map,
-                array(
-                    'rule' => '/',
-                    'target' => array('controller' => 'home')
-                )
-            )->map(
-                'login',
-                new \Proem\Controller\Route\Map,
-                array(
-                    'rule' => '/login',
-                    'target' => array('controller' => 'auth', 'action' => 'login')
-                )
-            )->map(
-                'logout',
-                new \Proem\Controller\Route\Map,
-                array(
-                    'rule' => '/logout',
-                    'target' => array('controller' => 'auth', 'action' => 'logout')
-                )
-            )->map(
-                'profile',
-                new \Proem\Controller\Route\Map,
-                array(
-                    'rule' => '/profile/:action/:username',
-                    'target' => array('controller' => 'profile')
-                )
-            )->map(
-                'profile-by-id',
-                new \Proem\Controller\Route\Map,
-                array(
-                    'rule' => '/users/:action/:id',
-                    'target' => array('controller' => 'profile')
-                )
-            )->route();
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testSeriesOfMappedRoutes($uri, $controller, $action, $params)
+    {
+        $router = new \Proem\Controller\Router($uri);
+        $command = $router
+        ->map(
+            'home-page',
+            new \Proem\Controller\Route\Map,
+            array(
+                'rule' => '/',
+                'target' => array('controller' => 'home')
+            )
+        )->map(
+            'login',
+            new \Proem\Controller\Route\Map,
+            array(
+                'rule' => '/login',
+                'target' => array('controller' => 'auth', 'action' => 'login')
+            )
+        )->map(
+            'logout',
+            new \Proem\Controller\Route\Map,
+            array(
+                'rule' => '/logout',
+                'target' => array('controller' => 'auth', 'action' => 'logout')
+            )
+        )->route();
 
-            if ($command) {
-                switch($i) {
-                    case 0:
-                        $this->assertEquals('home', $command->controller);
-                        $this->assertEmpty($command->action);
-                        $this->assertEmpty($command->params);
-                        break;
-                    case 1:
-                        $this->assertEquals('auth', $command->controller);
-                        $this->assertEquals('login', $command->action);
-                        $this->assertEmpty($command->params);
-                        break;
-                    case 2:
-                        $this->assertEquals('auth', $command->controller);
-                        $this->assertEquals('logout', $command->action);
-                        $this->assertEmpty($command->params);
-                        break;
-                    case 3:
-                        $this->assertEquals('profile', $command->controller);
-                        $this->assertEquals('view', $command->action);
-                        $this->assertEquals('thorpe', $command->username);
-                        break;
-                    case 4:
-                        $this->assertEquals('profile', $command->controller);
-                        $this->assertEquals('view', $command->action);
-                        $this->assertEquals(12, $command->id);
-                        break;
-                }
-            } else {
-                $this->fail("pattern that should have matched uri failed!");
-            }
-        }
+        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+
+        $this->assertEquals($controller, $command->controller);
+        $this->assertEquals($action, $command->action);
+        $this->assertEquals($params, $command->params);
+
+    }
+
+    public function testAnotherMappedRoute()
+    {
+        $router = new \Proem\Controller\Router('/user/view/12');
+        $command = $router
+        ->map(
+            'profile',
+            new \Proem\Controller\Route\Map,
+            array(
+                'rule' => '/user/:action/:id',
+                'target' => array('controller' => 'profile'),
+                'filter' => array('id' => '[\d]{1,8}')
+            )
+        )->route();
+
+        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+
+        $this->assertEquals('profile', $command->controller);
+        $this->assertEquals('view', $command->action);
+        $this->assertEquals(12, $command->id);
     }
 }
