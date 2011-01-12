@@ -26,11 +26,19 @@ abstract class AbstractRoute
     protected $_matched = false;
 
     /**
-     * Store matched parameters
+     * Store matched parameters within a Command object.
      *
-     * @var array
+     * @var Proem\Controller\Route\Command
      */
-    protected $_params = array();
+    protected $_command;
+
+    /**
+     * Setup the Command object.
+     */
+    public function __construct()
+    {
+        $this->_command = new Command;
+    }
 
     /**
      * Was a match found?
@@ -54,38 +62,11 @@ abstract class AbstractRoute
     }
 
     /**
-     * Retrieve a parameter.
-     *
-     * @param string $key
-     * @param mixed Default return value if $key not found.
-     * @return string
+     * Retrieve the Command object.
      */
-    public function getParam($key, $default = null)
+    public function getCommand()
     {
-        return isset($this->_params[$key]) ? $this->_params[$key] : $default;
-    }
-
-    /**
-     * Retrieve all parameters.
-     *
-     * @return array
-     */
-    public function getParams()
-    {
-        return $this->_params;
-    }
-
-    /**
-     * Set a parameter.
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return Proem\Controller\Route\AbstractRoute
-     */
-    public function setParam($key, $value)
-    {
-        $this->_params[$key] = $value;
-        return $this;
+        return $this->_command;
     }
 
     /**
