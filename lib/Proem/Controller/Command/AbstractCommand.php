@@ -18,9 +18,20 @@ namespace Proem\Controller\Command;
  */
 abstract class AbstractCommand
 {
-    public $controller;
-    public $action;
-    public $params;
+    protected $_data = array();
+    public $controller = null;
+    public $action = null;
+    public $params = array();
+
+    public function __set($name, $value) {
+        $this->_data[$name] = $value;
+    }
+
+    public function __get($name) {
+        if (array_key_exists($name, $this->_data)) {
+            return $this->_data[$name];
+        }
+    }
 
     abstract public function parseParams();
 }

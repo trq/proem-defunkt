@@ -38,6 +38,9 @@ class Map extends AbstractRoute
                 $key = str_replace(':', '', $matches[0]);
                 if (array_key_exists($key, $filter)) {
                     return '(' . $filter[$key] . ')';
+                } else if ($key == 'params') {
+                    // Allow params to contain /
+                    return '([a-zA-Z0-9_\+\-%\/]+)';
                 } else {
                     return '([a-zA-Z0-9_\+\-%]+)';
                 }
@@ -60,8 +63,12 @@ class Map extends AbstractRoute
             $this->setMatchFound();
         }
 
-        $this->getCommand()->controller = $params['controller'];
-        $this->getCommand()->action     = $params['action'];
-        $this->getCommand()->params     = $params['params'];
+        foreach ($params as $key => $value) {
+            $this->getCommand()->{$key} = $value;
+        }
+
+        //$this->getCommand()->controller = isset($params['controller']) ? $params['controller'] : null;
+        //$this->getCommand()->action     = isset($params['action']) ? $params['action'] : null;
+        //$this->getCommand()->params     = isset($params['params']) ? $params['params'] : array();
     }
 }
