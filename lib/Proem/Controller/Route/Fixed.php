@@ -2,7 +2,7 @@
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Route\Through
+ * @package    Proem\Controller\Route\Fixed
  */
 
 /**
