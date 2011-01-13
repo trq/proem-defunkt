@@ -29,5 +29,6 @@ class Standard extends AbstractRoute
         if (count($matches)) {
             $this->getCommand()->setParam('params', $matches);
         }
+        $this->getCommand()->isPopulated(true);
     }
 }

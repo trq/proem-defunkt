@@ -93,9 +93,10 @@ class Router
             $route = $data['route'];
             $route->process($this->_requestUri, $data['options']);
             if ($route->getMatchFound()) {
-                return $route->getCommand();
+                $route->getCommand()->isPopulated(true);
+                break;
             }
         }
-        return false;
+        return $route->getCommand();
     }
 }

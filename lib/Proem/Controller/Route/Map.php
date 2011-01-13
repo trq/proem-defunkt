@@ -71,8 +71,6 @@ class Map extends AbstractRoute
             }
         }
 
-        //$this->getCommand()->controller = isset($params['controller']) ? $params['controller'] : null;
-        //$this->getCommand()->action     = isset($params['action']) ? $params['action'] : null;
-        //$this->getCommand()->params     = isset($params['params']) ? $params['params'] : array();
+        $this->getCommand()->isPopulated(true);
     }
 }

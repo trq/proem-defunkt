@@ -29,5 +29,6 @@ class Fixed extends AbstractRoute
         $this->getCommand()->setParam('controller', isset($options['controller']) ? $options['controller'] : null);
         $this->getCommand()->setParam('action', isset($options['action']) ? $options['action'] : null);
         $this->getCommand()->setParam('params', explode('/', trim($uri,'/')));
+        $this->getCommand()->isPopulated(true);
     }
 }

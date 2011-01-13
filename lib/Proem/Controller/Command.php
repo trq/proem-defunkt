@@ -18,6 +18,8 @@ namespace Proem\Controller;
  */
 class Command
 {
+    private $_populated = false;
+
     private $_data = array();
 
     public function __construct()
@@ -40,6 +42,7 @@ class Command
         } else {
             $this->_data[$name] = $value;
         }
+        return $this;
     }
 
     public function getParam($name, $default = false) {
@@ -47,6 +50,16 @@ class Command
             return $this->_data[$name];
         }
         return $default;
+    }
+
+    public function isPopulated($flag = null)
+    {
+        if (is_null($flag)) {
+            return $this->_populated;
+        } else {
+            $this->_populated = $flag;
+        }
+        return $this;
     }
 
     private function _parseParams($params)

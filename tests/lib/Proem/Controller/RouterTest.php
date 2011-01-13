@@ -2,7 +2,6 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Exception.php';
-require_once 'lib/Proem/Controller/Command/AbstractCommand.php';
 require_once 'lib/Proem/Controller/Command.php';
 require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
 require_once 'lib/Proem/Controller/Route/Map.php';
@@ -37,6 +36,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         )->route();
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertTrue($command->isPopulated());
         $this->assertEquals('foo', $command->getParam('controller'));
         $this->assertEquals('bar', $command->getParam('action'));
         $this->assertEquals('b', $command->getParam('a'));
@@ -56,6 +56,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         )->route();
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertTrue($command->isPopulated());
         $this->assertEquals('auth', $command->getParam('controller'));
         $this->assertEquals('login', $command->getParam('action'));
         $this->assertFalse($command->getParam('doesntexist'));
@@ -101,7 +102,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         )->route();
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
-
+        $this->assertTrue($command->isPopulated());
         $this->assertEquals($controller, $command->getParam('controller'));
         $this->assertEquals($action, $command->getParam('action'));
 
@@ -123,7 +124,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         )->route();
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
-
+        $this->assertTrue($command->isPopulated());
         $this->assertEquals('profile', $command->getParam('controller'));
         $this->assertEquals('view', $command->getParam('action'));
         $this->assertEquals(12, $command->getParam('id'));
