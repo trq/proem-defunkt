@@ -16,18 +16,59 @@ namespace Proem\Controller;
  * @category   Proem
  * @package    Proem\Controller\Command
  */
-class Command extends Command\AbstractCommand
+class Command
 {
-    public function parseParams()
+    private $_data = array();
+
+    public function __construct()
+    {
+        // Must exist.
+        $this->_data['controller'] = null;
+        $this->_data['action'] = null;
+    }
+
+    public function setParam($name, $value) {
+        // params is a special case passed in via the _Router_
+        if ($name == 'params') {
+            if (is_array($value) && !$this->_isAssoc($value)) {
+                $this->_data = array_merge($this->_data, $this->_parseParams($value));
+            } else {
+                throw new Exception(
+                    "The 'params' parameter is a special case and *must* be a non-associative array"
+                );
+            }
+        } else {
+            $this->_data[$name] = $value;
+        }
+    }
+
+    public function getParam($name, $default = false) {
+        if (array_key_exists($name, $this->_data)) {
+            return $this->_data[$name];
+        }
+        return $default;
+    }
+
+    private function _parseParams($params)
     {
         $tmp = array();
-        for ($i = 0; $i <= count($this->params); $i = $i+2) {
-            if (isset($this->params[$i+1])) {
-                $tmp[$this->params[$i]] = $this->params[$i+1];
+        for ($i = 0; $i <= count($params); $i = $i+2) {
+            if (isset($params[$i+1])) {
+                $tmp[$params[$i]] = $params[$i+1];
             } else {
                 break;
             }
         }
         return $tmp;
+    }
+
+    /**
+     * http://stackoverflow.com/questions/173400/php-arrays-a-good-way-to-check-if-an-array-is-associative-or-sequential
+     *
+     * @param array $array
+     * @return bool
+     */
+    private function _isAssoc(Array $array) {
+        return (bool)count(array_filter(array_keys($array), 'is_string'));
     }
 }

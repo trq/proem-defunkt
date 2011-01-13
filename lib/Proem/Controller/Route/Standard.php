@@ -24,12 +24,10 @@ class Standard extends AbstractRoute
     public function process($uri, $options = array()) {
         $matches = explode('/', trim($uri, '/'));
         $this->setMatchFound();
-        $this->getCommand()->controller = array_shift($matches);
-        $this->getCommand()->action     = array_shift($matches);
+        $this->getCommand()->setParam('controller', array_shift($matches));
+        $this->getCommand()->setParam('action', array_shift($matches));
         if (count($matches)) {
-            $this->getCommand()->params = implode('/', $matches);
-        } else {
-            $this->getCommand()->params = array();
+            $this->getCommand()->setParam('params', $matches);
         }
     }
 }

@@ -6,7 +6,7 @@ require_once 'lib/Proem/Controller/Command.php';
 require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
 require_once 'lib/Proem/Controller/Route/Fixed.php';
 
-class ProemControllerRouteThroughTest extends PHPUnit_Framework_TestCase
+class ProemControllerRouteFixedTest extends PHPUnit_Framework_TestCase
 {
     private $_route;
 
@@ -24,11 +24,11 @@ class ProemControllerRouteThroughTest extends PHPUnit_Framework_TestCase
 
     public function testParamsExist()
     {
-        $this->assertEquals('foo', $this->_route->getCommand()->controller);
-        $this->assertEquals('bar', $this->_route->getCommand()->action);
-        $this->assertEquals(
+        $this->assertEquals('foo', $this->_route->getCommand()->getParam('controller'));
+        $this->assertEquals('bar', $this->_route->getCommand()->getParam('action'));
+        /*$this->assertEquals(
             '/some/uri/our/action/will/end/up/handling',
             $this->_route->getCommand()->params
-        );
+        );*/
     }
 }

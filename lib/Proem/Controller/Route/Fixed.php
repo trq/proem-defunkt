@@ -26,8 +26,8 @@ class Fixed extends AbstractRoute
     public function process($uri, $options = array())
     {
         $this->setMatchFound();
-        $this->getCommand()->controller = isset($options['controller']) ? $options['controller'] : null;
-        $this->getCommand()->action     = isset($options['action']) ? $options['action'] : null;
-        $this->getCommand()->params     = $uri;
+        $this->getCommand()->setParam('controller', isset($options['controller']) ? $options['controller'] : null);
+        $this->getCommand()->setParam('action', isset($options['action']) ? $options['action'] : null);
+        $this->getCommand()->setParam('params', explode('/', trim($uri,'/')));
     }
 }

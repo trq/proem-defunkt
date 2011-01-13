@@ -19,8 +19,8 @@ class ProemControllerRouteStandardTest extends PHPUnit_Framework_TestCase
 
     public function testParamKeysExist()
     {
-        $this->assertEquals('foo', $this->_route->getCommand()->controller);
-        $this->assertEquals('bar', $this->_route->getCommand()->action);
-        $this->assertEquals('a/b', $this->_route->getCommand()->params);
+        $this->assertEquals('foo', $this->_route->getCommand()->getParam('controller'));
+        $this->assertEquals('bar', $this->_route->getCommand()->getParam('action'));
+        $this->assertEquals('b', $this->_route->getCommand()->getParam('a'));
     }
 }

@@ -18,9 +18,9 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
             new \Proem\Controller\Route\Map
         )->route();
 
-        $this->assertEquals('foo', $command->controller);
-        $this->assertEquals('bar', $command->action);
-        $this->assertEquals('a/b', $command->params);
+        $this->assertEquals('foo', $command->getParam('controller'));
+        $this->assertEquals('bar', $command->getParam('action'));
+        $this->assertEquals('b', $command->getParam('a'));
     }
 
     public function testVerboseDefaultMapedRoute()
@@ -36,13 +36,11 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
             )
         )->route();
 
-        if ($command) {
-            $this->assertEquals('foo', $command->controller);
-            $this->assertEquals('bar', $command->action);
-            $this->assertEquals('a/b', $command->params);
-        } else {
-            $this->fail("pattern that should have matched uri failed!");
-        }
+        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertEquals('foo', $command->getParam('controller'));
+        $this->assertEquals('bar', $command->getParam('action'));
+        $this->assertEquals('b', $command->getParam('a'));
+
     }
 
     public function testTargetedMapedRoute()
@@ -57,28 +55,25 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
             )
         )->route();
 
-        if ($command) {
-            $this->assertEquals('auth', $command->controller);
-            $this->assertEquals('login', $command->action);
-            $this->assertEmpty($command->params);
-        } else {
-            $this->fail("pattern that should have matched uri failed!");
-        }
+        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertEquals('auth', $command->getParam('controller'));
+        $this->assertEquals('login', $command->getParam('action'));
+        $this->assertFalse($command->getParam('doesntexist'));
     }
 
     public function dataProvider()
     {
         return array(
-            array('/', 'home', null, array()),
-            array('/login', 'auth', 'login', array()),
-            array('/logout', 'auth', 'logout', array())
+            array('/', 'home', null),
+            array('/login', 'auth', 'login'),
+            array('/logout', 'auth', 'logout')
          );
     }
 
     /**
      * @dataProvider dataProvider
      */
-    public function testSeriesOfMappedRoutes($uri, $controller, $action, $params)
+    public function testSeriesOfMappedRoutes($uri, $controller, $action)
     {
         $router = new \Proem\Controller\Router($uri);
         $command = $router
@@ -107,9 +102,9 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
 
-        $this->assertEquals($controller, $command->controller);
-        $this->assertEquals($action, $command->action);
-        $this->assertEquals($params, $command->params);
+        $this->assertEquals($controller, $command->getParam('controller'));
+        $this->assertEquals($action, $command->getParam('action'));
+
 
     }
 
@@ -129,8 +124,8 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Proem\Controller\Command', $command);
 
-        $this->assertEquals('profile', $command->controller);
-        $this->assertEquals('view', $command->action);
-        $this->assertEquals(12, $command->id);
+        $this->assertEquals('profile', $command->getParam('controller'));
+        $this->assertEquals('view', $command->getParam('action'));
+        $this->assertEquals(12, $command->getParam('id'));
     }
 }

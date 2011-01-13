@@ -9,11 +9,9 @@ class ProemCommandTest extends PHPUnit_Framework_TestCase
     public function testParseParams()
     {
         $command = new Proem\Controller\Command;
-        $command->params = array('foo', 'bar', 'a', 'b', 'c');
+        $command->setParam('params', array('foo', 'bar', 'a', 'b', 'c'));
 
-        $params = $command->parseParams();
-
-        $this->assertEquals('bar', $params['foo']);
-        $this->assertFalse(isset($params['c']));
+        $this->assertEquals('bar', $command->getParam('foo'));
+        $this->assertFalse($command->getParam('c'));
     }
 }

@@ -64,7 +64,11 @@ class Map extends AbstractRoute
         }
 
         foreach ($params as $key => $value) {
-            $this->getCommand()->{$key} = $value;
+            if ($key == 'params') {
+                $this->getCommand()->setParam($key, explode('/', trim($value, '/')));
+            } else {
+                $this->getCommand()->setParam($key, $value);
+            }
         }
 
         //$this->getCommand()->controller = isset($params['controller']) ? $params['controller'] : null;
