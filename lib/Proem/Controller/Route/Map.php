@@ -61,16 +61,15 @@ class Map extends AbstractRoute
             }
 
             $this->setMatchFound();
-        }
-
-        foreach ($params as $key => $value) {
-            if ($key == 'params') {
-                $this->getCommand()->setParam($key, explode('/', trim($value, '/')));
-            } else {
-                $this->getCommand()->setParam($key, $value);
+            foreach ($params as $key => $value) {
+                if ($key == 'params') {
+                    $this->getCommand()->setParam($key, explode('/', trim($value, '/')));
+                } else {
+                    $this->getCommand()->setParam($key, $value);
+                }
             }
-        }
 
-        $this->getCommand()->isPopulated(true);
+            $this->getCommand()->isPopulated(true);
+        }
     }
 }

@@ -92,8 +92,7 @@ class Router
         foreach ($this->_routes as $name => $data) {
             $route = $data['route'];
             $route->process($this->_requestUri, $data['options']);
-            if ($route->getMatchFound()) {
-                $route->getCommand()->isPopulated(true);
+            if ($route->getMatchFound() && $route->getCommand()->isPopulated()) {
                 break;
             }
         }
