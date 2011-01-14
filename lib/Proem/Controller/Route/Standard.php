@@ -11,24 +11,36 @@
 namespace Proem\Controller\Route;
 
 /**
- * The standard concrete _Route_. This _Route_ is designed to take a simple
- * pattern, translate that into a more complex regular expression, which in
- * turn is used to match against the given url to retrieve the controller /
- * action & params combinations.
+ * The standard concrete _Route_.
+ *
+ * Designed to be fast. This route simply takes a given url and splits it into
+ * an array.
+ *
+ * The parts of this array are then sent to the _Command_ object setting the first
+ * index to controller, the second to action and all others as params (which are
+ * in turn transformed into key => value pairs).
  *
  * @category   Proem
  * @package    Proem\Controller\Route\Standard
  */
 class Standard extends AbstractRoute
 {
+    /**
+     * process the given uri.
+     *
+     * @param string $uri
+     * @param array $options
+     */
     public function process($uri, $options = array()) {
-        $matches = explode('/', trim($uri, '/'));
-        $this->setMatchFound();
-        $this->getCommand()->setParam('controller', array_shift($matches));
-        $this->getCommand()->setParam('action', array_shift($matches));
-        if (count($matches)) {
-            $this->getCommand()->setParam('params', $matches);
+        $matches = explode('/', (string) trim($uri, '/'));
+        if (is_array($matches)) {
+            $this->getCommand()->setParam('controller', array_shift($matches));
+            $this->getCommand()->setParam('action', array_shift($matches));
+            if (count($matches)) {
+                $this->getCommand()->setParam('params', $matches);
+            }
+            $this->setMatchFound();
+            $this->getCommand()->isPopulated(true);
         }
-        $this->getCommand()->isPopulated(true);
     }
 }

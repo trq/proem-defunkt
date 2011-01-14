@@ -18,29 +18,47 @@ namespace Proem\Controller;
  */
 class Command
 {
+    /**
+     * A flag to keep note as to wether or not this _Command_ is populated
+     * with data.
+     *
+     * @var bool
+     */
     private $_populated = false;
 
+    /**
+     * Store the actual data.
+     *
+     * @var array
+     */
     private $_data = array();
 
+    /**
+     * Initialize the _data array.
+     */
     public function __construct()
     {
-        // Must exist.
         $this->_data['controller'] = null;
         $this->_data['action'] = null;
     }
 
+    /**
+     * Store a parameter.
+     *
+     * If the name of the parameter is 'params' it is considered a special case
+     * and its value (an array) will be processed seperately.
+     *
+     * @see _parseParams.
+     *
+     * @param string $name
+     * @param string|array $value
+     * @return Command
+     */
     public function setParam($name, $value) {
-        // params is a special case passed in via the _Router_
         if ($name == 'params') {
-            if (is_array($value) && !$this->_isAssoc($value)) {
-                $this->_data = array_merge($this->_data, $this->_parseParams($value));
-            } else {
-                throw new Exception(
-                    "The 'params' parameter is a special case and *must* be a non-associative array"
-                );
-            }
+            $this->_parseParams($value);
         } else {
-            $this->_data[$name] = $value;
+            $this->_data[$name] = (string) $value;
         }
         return $this;
     }
@@ -64,15 +82,21 @@ class Command
 
     private function _parseParams($params)
     {
-        $tmp = array();
-        for ($i = 0; $i <= count($params); $i = $i+2) {
-            if (isset($params[$i+1])) {
-                $tmp[$params[$i]] = $params[$i+1];
-            } else {
-                break;
+        if (is_array($params) && !$this->_isAssoc($params)) {
+            $tmp = array();
+            for ($i = 0; $i <= count($params); $i = $i+2) {
+                if (isset($params[$i+1])) {
+                    $tmp[(string) $params[$i]] = (string) $params[$i+1];
+                } else {
+                    break;
+                }
             }
+            $this->_data = array_merge($this->_data, $tmp);
+        } else {
+            throw new Exception(
+                "The 'params' parameter is a special case and *must* be a non-associative array"
+            );
         }
-        return $tmp;
     }
 
     /**
