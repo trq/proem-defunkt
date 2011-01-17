@@ -27,22 +27,22 @@ lib directory is on php's include_path. That's it !
 
 # Filing Bugs and Building Test Cases
 
-This is the best way to contribute to Proem. Visit http://github.com/trq/proem/tickets.
+This is the best way to contribute to Proem. Visit our [bugtracker](http://github.com/trq/proem/tickets).
 
 # Committing and Pull Requests
 
 If you wish to contribute code to Proem please make sure you've first filed a bug report detailing your specific bug or feature request.
 
-Next, [https://github.com/signup/free](create an account on Github) (if you haven't done so already).
+Next, [create an account on Github](https://github.com/signup/free) (if you haven't done so already).
 
-Create a fork of the [http://github.com/trq/proem](Proem Github project) ([http://help.github.com/forking/](More details of forking)).
+Create a fork of the [Proem Github project](http://github.com/trq/proem) ([More details on forking](http://help.github.com/forking/)).
 
-Before you write any code be sure to create a new branch in your repository in which all the changes will be committed. More details about Git branches can be found in the [http://progit.org/book/ch3-1.html](Pro Git chapter on branches) and in the chapter on [http://progit.org/book/ch3-5.html](remote branches).
+Before you write any code be sure to create a new branch in your repository in which all the changes will be committed. More details about Git branches can be found in the [Pro Git chapter on branches](http://progit.org/book/ch3-1.html) and in the chapter on [remote branches](http://progit.org/book/ch3-5.html).
 
-After your new branch has been pushed to your repository you can now send a [http://help.github.com/pull-requests/](pull request). Be sure to reference the bug(s) that you're fixing in the commit messages and in the pull request description (this helps us to track the changes easier).
+After your new branch has been pushed to your repository you can now send a [pull request](http://help.github.com/pull-requests/). Be sure to reference the bug(s) that you're fixing in the commit messages and in the pull request description (this helps us to track the changes easier).
 
 ## Discussion
 
 # IRC
 
-The proem project has an irc channel available [http://webchat.freenode.net/?channels=jquery-dev](#proem) on irc.freeonde.net
+The proem project has an irc channel available [#proem](http://webchat.freenode.net/?channels=jquery-dev) on irc.freeonde.net
