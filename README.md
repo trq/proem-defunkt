@@ -45,4 +45,4 @@ After your new branch has been pushed to your repository you can now send a [pul
 
 #### IRC
 
-The proem project has an irc channel available [#proem](http://webchat.freenode.net/?channels=jquery-dev) on irc.freeonde.net
+The proem project has an irc channel available [#proem](http://webchat.freenode.net/?channels=proem) on irc.freeonde.net
