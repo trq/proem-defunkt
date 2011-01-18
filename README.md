@@ -41,7 +41,7 @@ Before you write any code be sure to create a new branch in your repository in w
 
 After your new branch has been pushed to your repository you can now send a [pull request](http://help.github.com/pull-requests/). Be sure to reference the bug(s) that you're fixing in the commit messages and in the pull request description (this helps us to track the changes easier).
 
-## Discussion
+## DISCUSSION
 
 #### IRC
 
