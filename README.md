@@ -23,13 +23,13 @@ the chain and off to the client. Simple, in theory.
 Installation is simple. Place the root Proem directory wherever you like and insure that the
 lib directory is on php's include_path. That's it !
 
-## Contributing
+## CONTRIBUTING
 
-# Filing Bugs and Building Test Cases
+#### Filing Bugs and Building Test Cases
 
 This is the best way to contribute to Proem. Visit our [bugtracker](http://github.com/trq/proem/tickets).
 
-# Committing and Pull Requests
+#### Committing and Pull Requests
 
 If you wish to contribute code to Proem please make sure you've first filed a bug report detailing your specific bug or feature request.
 
@@ -43,6 +43,6 @@ After your new branch has been pushed to your repository you can now send a [pul
 
 ## Discussion
 
-# IRC
+#### IRC
 
 The proem project has an irc channel available [#proem](http://webchat.freenode.net/?channels=jquery-dev) on irc.freeonde.net
