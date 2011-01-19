@@ -27,7 +27,7 @@ lib directory is on php's include_path. That's it !
 
 #### Filing Bugs and Building Test Cases
 
-This is the best way to contribute to Proem. Visit our [bugtracker](http://github.com/trq/proem/tickets).
+This is the best way to contribute to Proem. Visit our [bugtracker](http://github.com/trq/proem/issues).
 
 #### Committing and Pull Requests
 
