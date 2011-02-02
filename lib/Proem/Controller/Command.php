@@ -59,6 +59,27 @@ class Command
     private $_data = array();
 
     /**
+     * A simple proxie to getParam()
+     *
+     * @param string $name
+     */
+    public function __get($name)
+    {
+        return $this->getParam($name);
+    }
+
+    /**
+     * A simple proxie to setParam()
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        return $this->setParam($name, $value);
+    }
+
+    /**
      * Initialize the _data array.
      */
     public function __construct()
