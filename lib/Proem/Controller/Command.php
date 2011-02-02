@@ -138,6 +138,16 @@ class Command
     }
 
     /**
+     * Retrieve all parameters as an associative array.
+     *
+     * @return array
+     */
+    public function geParams()
+    {
+        return $this->_data;
+    }
+
+    /**
      * Stores a simple flag.
      *
      * This should be set to true once you have set
