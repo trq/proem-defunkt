@@ -83,30 +83,31 @@ class Command
     /**
      * Store multiple params.
      *
-     * The array which setParams() accepts *MUST* be non-associative. If you want
-     * keys to associate to values, place them next to each other within the array.
-     *
-     * @param array $params This array *MUST* be non-associative.
+     * @param array $params
      */
     public function setParams(Array $params)
     {
-        if (is_array($params) && !$this->_isAssoc($params)) {
-            $tmp = array();
-            for ($i = 0; $i <= count($params); $i = $i+2) {
-                if (isset($params[$i+1])) {
-                    $tmp[(string) $params[$i]] = (string) $params[$i+1];
-                } else {
-                    break;
-                }
-            }
-            $this->_data = array_merge($this->_data, $tmp);
-        } else {
-            throw new Exception(
-                "Associative array passed to setParams()."
-            );
+        if ($this->_isAssoc($params)) {
+            $params = $this->_flatten($params);
         }
+        $tmp = array();
+        for ($i = 0; $i <= count($params); $i = $i+2) {
+            if (isset($params[$i+1])) {
+                $tmp[(string) $params[$i]] = (string) $params[$i+1];
+            } else {
+                break;
+            }
+        }
+        $this->_data = array_merge($this->_data, $tmp);
     }
 
+    /**
+     * Retrieve a parameter or an optional default.
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
     public function getParam($name, $default = false)
     {
         if (array_key_exists($name, $this->_data)) {
@@ -115,6 +116,14 @@ class Command
         return $default;
     }
 
+    /**
+     * Stores a simple flag.
+     *
+     * This should be set to true once you have set
+     * all parameters on the _Command_ object.
+     * @param <type> $flag
+     * @return Command
+     */
     public function isPopulated($flag = null)
     {
         if (is_null($flag)) {
@@ -131,7 +140,24 @@ class Command
      * @param array $array
      * @return bool
      */
-    private function _isAssoc(Array $array) {
+    private function _isAssoc(Array $array)
+    {
         return (bool)count(array_filter(array_keys($array), 'is_string'));
+    }
+
+    /**
+     * Flatten an associative array into a numerically indexed array.
+     *
+     * @param array $a
+     * @return array
+     */
+    private function _flatten(Array $a)
+    {
+        $tmp = array();
+        foreach ($a as $k => $v) {
+            $tmp[] = $k;
+            $tmp[] = $v;
+        }
+        return $tmp;
     }
 }
