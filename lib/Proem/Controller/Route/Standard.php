@@ -62,7 +62,7 @@ class Standard extends AbstractRoute
             $this->getCommand()->setParam('controller', array_shift($matches));
             $this->getCommand()->setParam('action', array_shift($matches));
             if (count($matches)) {
-                $this->getCommand()->setParam('params', $matches);
+                $this->getCommand()->setParams($matches);
             }
             $this->setMatchFound();
             $this->getCommand()->isPopulated(true);

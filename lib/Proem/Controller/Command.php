@@ -70,25 +70,45 @@ class Command
     /**
      * Store a parameter.
      *
-     * If the name of the parameter is 'params' it is considered a special case
-     * and its value (an array) will be processed seperately.
-     *
-     * @see _parseParams.
-     *
      * @param string $name
      * @param string|array $value
      * @return Command
      */
-    public function setParam($name, $value) {
-        if ($name == 'params') {
-            $this->_parseParams($value);
-        } else {
-            $this->_data[$name] = (string) $value;
-        }
+    public function setParam($name, $value)
+    {
+        $this->_data[$name] = (string) $value;
         return $this;
     }
 
-    public function getParam($name, $default = false) {
+    /**
+     * Store multiple params.
+     *
+     * The array which setParams() accepts *MUST* be non-associative. If you want
+     * keys to associate to values, place them next to each other within the array.
+     *
+     * @param array $params This array *MUST* be non-associative.
+     */
+    public function setParams(Array $params)
+    {
+        if (is_array($params) && !$this->_isAssoc($params)) {
+            $tmp = array();
+            for ($i = 0; $i <= count($params); $i = $i+2) {
+                if (isset($params[$i+1])) {
+                    $tmp[(string) $params[$i]] = (string) $params[$i+1];
+                } else {
+                    break;
+                }
+            }
+            $this->_data = array_merge($this->_data, $tmp);
+        } else {
+            throw new Exception(
+                "Associative array passed to setParams()."
+            );
+        }
+    }
+
+    public function getParam($name, $default = false)
+    {
         if (array_key_exists($name, $this->_data)) {
             return $this->_data[$name];
         }
@@ -103,25 +123,6 @@ class Command
             $this->_populated = $flag;
         }
         return $this;
-    }
-
-    private function _parseParams($params)
-    {
-        if (is_array($params) && !$this->_isAssoc($params)) {
-            $tmp = array();
-            for ($i = 0; $i <= count($params); $i = $i+2) {
-                if (isset($params[$i+1])) {
-                    $tmp[(string) $params[$i]] = (string) $params[$i+1];
-                } else {
-                    break;
-                }
-            }
-            $this->_data = array_merge($this->_data, $tmp);
-        } else {
-            throw new Exception(
-                "The 'params' parameter is a special case and *must* be a non-associative array"
-            );
-        }
     }
 
     /**

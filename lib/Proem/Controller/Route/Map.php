@@ -119,8 +119,11 @@ class Map extends AbstractRoute
 
             $this->setMatchFound();
             foreach ($params as $key => $value) {
-                if ($key == 'params') {
-                    $this->getCommand()->setParam($key, explode('/', trim($value, '/')));
+                // If the string within $value looks like a / seperated string,
+                // parse it into an array and send it to setParams() instead
+                // of the singular setParam.
+                if (strpos($value, '/') !== false) {
+                    $this->getCommand()->setParams(explode('/', trim($value, '/')));
                 } else {
                     $this->getCommand()->setParam($key, $value);
                 }

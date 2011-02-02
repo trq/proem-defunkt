@@ -8,7 +8,7 @@ class ProemCommandTest extends PHPUnit_Framework_TestCase
     public function testParseParams()
     {
         $command = new Proem\Controller\Command;
-        $command->setParam('params', array('foo', 'bar', 'a', 'b', 'c'));
+        $command->setParams(array('foo', 'bar', 'a', 'b', 'c'));
         $command->isPopulated(true);
 
         $this->assertTrue($command->isPopulated());
