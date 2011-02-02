@@ -47,13 +47,6 @@ namespace Proem;
 class Application
 {
     /**
-     * Store an instance.
-     *
-     * @var Proem\Application
-     */
-    private static $_instance = null;
-
-    /**
      * Store any resources.
      *
      * @var array
