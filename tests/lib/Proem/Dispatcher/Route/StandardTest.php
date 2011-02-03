@@ -2,9 +2,9 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Exception.php';
-require_once 'lib/Proem/Controller/Command.php';
-require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
-require_once 'lib/Proem/Controller/Route/Standard.php';
+require_once 'lib/Proem/Dispatcher/Command.php';
+require_once 'lib/Proem/Dispatcher/Route/AbstractRoute.php';
+require_once 'lib/Proem/Dispatcher/Route/Standard.php';
 
 class ProemControllerRouteStandardTest extends PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class ProemControllerRouteStandardTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_route = new Proem\Controller\Route\Standard;
+        $this->_route = new Proem\Dispatcher\Route\Standard;
         $this->_route->process('/foo/bar/a/b');
     }
 

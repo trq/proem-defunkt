@@ -27,19 +27,19 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Command
+ * @package    Proem\Dispatcher\Command
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller;
+namespace Proem\Dispatcher;
 
 /**
  * Store the controller, action and params.
  *
  * @category   Proem
- * @package    Proem\Controller\Command
+ * @package    Proem\Dispatcher\Command
  */
 class Command
 {

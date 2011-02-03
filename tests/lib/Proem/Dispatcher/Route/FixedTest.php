@@ -1,9 +1,9 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
-require_once 'lib/Proem/Controller/Command.php';
-require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
-require_once 'lib/Proem/Controller/Route/Fixed.php';
+require_once 'lib/Proem/Dispatcher/Command.php';
+require_once 'lib/Proem/Dispatcher/Route/AbstractRoute.php';
+require_once 'lib/Proem/Dispatcher/Route/Fixed.php';
 
 class ProemControllerRouteFixedTest extends PHPUnit_Framework_TestCase
 {
@@ -11,7 +11,7 @@ class ProemControllerRouteFixedTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_route = new Proem\Controller\Route\Fixed;
+        $this->_route = new Proem\Dispatcher\Route\Fixed;
         $this->_route->process(
             '/some/uri/our/action/will/end/up/handling',
             array(

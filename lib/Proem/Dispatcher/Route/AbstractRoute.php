@@ -27,19 +27,19 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Route\AbstractRoute
+ * @package    Proem\Dispatcher\Route\AbstractRoute
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller\Route;
+namespace Proem\Dispatcher\Route;
 
 /**
  * An Abstract Route Interface.
  *
  * @category   Proem
- * @package    Proem\Controller\Route\AbstractRoute
+ * @package    Proem\Dispatcher\Route\AbstractRoute
  */
 abstract class AbstractRoute
 {
@@ -53,7 +53,7 @@ abstract class AbstractRoute
     /**
      * Store matched parameters within a Command object.
      *
-     * @var Proem\Controller\Route\Command
+     * @var Proem\Dispatcher\Route\Command
      */
     protected $_command;
 
@@ -62,7 +62,7 @@ abstract class AbstractRoute
      */
     public function __construct()
     {
-        $this->_command = new \Proem\Controller\Command;
+        $this->_command = new \Proem\Dispatcher\Command;
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class AbstractRoute
     /**
      * Set _matched flag.
      *
-     * @return Proem\Controller\Route\AbstractRoute
+     * @return Proem\Dispatcher\Route\AbstractRoute
      */
     public function setMatchFound($bool = true)
     {

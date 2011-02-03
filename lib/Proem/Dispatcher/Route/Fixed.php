@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Route\Fixed
+ * @package    Proem\Dispatcher\Route\Fixed
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller\Route;
+namespace Proem\Dispatcher\Route;
 
 /**
  * The _Fixed_ _Route_.
@@ -46,7 +46,7 @@ namespace Proem\Controller\Route;
  * designed to serve data from a datasource (db) based on the url.
  *
  * @category   Proem
- * @package    Proem\Controller\Route\Fixed
+ * @package    Proem\Dispatcher\Route\Fixed
  */
 class Fixed extends AbstractRoute
 {

@@ -1,13 +1,13 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
-require_once 'lib/Proem/Controller/Command.php';
+require_once 'lib/Proem/Dispatcher/Command.php';
 
 class ProemCommandTest extends PHPUnit_Framework_TestCase
 {
     public function testParseParams()
     {
-        $command = new Proem\Controller\Command;
+        $command = new Proem\Dispatcher\Command;
         $command->setParams(array('foo', 'bar', 'a', 'b', 'c'));
         $command->isPopulated(true);
 

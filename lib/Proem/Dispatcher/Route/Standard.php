@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Route\Standard
+ * @package    Proem\Dispatcher\Route\Standard
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller\Route;
+namespace Proem\Dispatcher\Route;
 
 /**
  * The standard concrete _Route_.
@@ -46,7 +46,7 @@ namespace Proem\Controller\Route;
  * in turn transformed into key => value pairs).
  *
  * @category   Proem
- * @package    Proem\Controller\Route\Standard
+ * @package    Proem\Dispatcher\Route\Standard
  */
 class Standard extends AbstractRoute
 {

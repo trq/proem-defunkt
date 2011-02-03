@@ -27,17 +27,17 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Router
+ * @package    Proem\Dispatcher\Router
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller;
+namespace Proem\Dispatcher;
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Router
+ * @package    Proem\Dispatcher\Router
  */
 class Router
 {
@@ -98,7 +98,7 @@ class Router
      * Store route objects.
      *
      * @param array $options
-     * @return \Proem\Controller\Router
+     * @return \Proem\Dispatcher\Router
      */
     public function map($name, Route\AbstractRoute $route, $options = array())
     {
@@ -110,7 +110,7 @@ class Router
     /**
      * Test routes for matching route & return a Command object
      *
-     * @return \Proem\Controller\Command
+     * @return \Proem\Dispatcher\Command
      */
     public function route()
     {

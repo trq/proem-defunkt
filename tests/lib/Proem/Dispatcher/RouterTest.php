@@ -2,19 +2,19 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Exception.php';
-require_once 'lib/Proem/Controller/Command.php';
-require_once 'lib/Proem/Controller/Route/AbstractRoute.php';
-require_once 'lib/Proem/Controller/Route/Map.php';
-require_once 'lib/Proem/Controller/Router.php';
+require_once 'lib/Proem/Dispatcher/Command.php';
+require_once 'lib/Proem/Dispatcher/Route/AbstractRoute.php';
+require_once 'lib/Proem/Dispatcher/Route/Map.php';
+require_once 'lib/Proem/Dispatcher/Router.php';
 
 class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 {
     public function testDefaultMapedRoute()
     {
-        $router = new \Proem\Controller\Router('/foo/bar/a/b');
+        $router = new \Proem\Dispatcher\Router('/foo/bar/a/b');
         $command = $router->map(
             'default',
-            new \Proem\Controller\Route\Map
+            new \Proem\Dispatcher\Route\Map
         )->route();
 
         $this->assertEquals('foo', $command->getParam('controller'));
@@ -24,10 +24,10 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testVerboseDefaultMapedRoute()
     {
-        $router = new \Proem\Controller\Router('/foo/bar/a/b');
+        $router = new \Proem\Dispatcher\Router('/foo/bar/a/b');
         $command = $router->map(
             'simple',
-            new \Proem\Controller\Route\Map,
+            new \Proem\Dispatcher\Route\Map,
             array(
                 'rule'     => '/:controller/:action/:params',
                 'target'    => array(),
@@ -35,7 +35,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
             )
         )->route();
 
-        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertInstanceOf('\Proem\Dispatcher\Command', $command);
         $this->assertTrue($command->isPopulated());
         $this->assertEquals('foo', $command->getParam('controller'));
         $this->assertEquals('bar', $command->getParam('action'));
@@ -45,17 +45,17 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testTargetedMapedRoute()
     {
-        $router = new \Proem\Controller\Router('/login');
+        $router = new \Proem\Dispatcher\Router('/login');
         $command = $router->map(
              'simple',
-             new \Proem\Controller\Route\Map,
+             new \Proem\Dispatcher\Route\Map,
              array(
                 'rule'     => '/login',
                 'target'    => array('controller' => 'auth', 'action' => 'login')
             )
         )->route();
 
-        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertInstanceOf('\Proem\Dispatcher\Command', $command);
         $this->assertTrue($command->isPopulated());
         $this->assertEquals('auth', $command->getParam('controller'));
         $this->assertEquals('login', $command->getParam('action'));
@@ -76,32 +76,32 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
      */
     public function testSeriesOfMappedRoutes($uri, $controller, $action)
     {
-        $router = new \Proem\Controller\Router($uri);
+        $router = new \Proem\Dispatcher\Router($uri);
         $command = $router
         ->map(
             'home-page',
-            new \Proem\Controller\Route\Map,
+            new \Proem\Dispatcher\Route\Map,
             array(
                 'rule' => '/',
                 'target' => array('controller' => 'home')
             )
         )->map(
             'login',
-            new \Proem\Controller\Route\Map,
+            new \Proem\Dispatcher\Route\Map,
             array(
                 'rule' => '/login',
                 'target' => array('controller' => 'auth', 'action' => 'login')
             )
         )->map(
             'logout',
-            new \Proem\Controller\Route\Map,
+            new \Proem\Dispatcher\Route\Map,
             array(
                 'rule' => '/logout',
                 'target' => array('controller' => 'auth', 'action' => 'logout')
             )
         )->route();
 
-        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertInstanceOf('\Proem\Dispatcher\Command', $command);
         $this->assertTrue($command->isPopulated());
         $this->assertEquals($controller, $command->getParam('controller'));
         $this->assertEquals($action, $command->getParam('action'));
@@ -111,11 +111,11 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testAnotherMappedRoute()
     {
-        $router = new \Proem\Controller\Router('/user/view/12');
+        $router = new \Proem\Dispatcher\Router('/user/view/12');
         $command = $router
         ->map(
             'profile',
-            new \Proem\Controller\Route\Map,
+            new \Proem\Dispatcher\Route\Map,
             array(
                 'rule' => '/user/:action/:id',
                 'target' => array('controller' => 'profile'),
@@ -123,7 +123,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
             )
         )->route();
 
-        $this->assertInstanceOf('\Proem\Controller\Command', $command);
+        $this->assertInstanceOf('\Proem\Dispatcher\Command', $command);
         $this->assertTrue($command->isPopulated());
         $this->assertEquals('profile', $command->getParam('controller'));
         $this->assertEquals('view', $command->getParam('action'));

@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Controller\Route\Map
+ * @package    Proem\Dispatcher\Route\Map
  */
 
 /**
  * @namespace
  */
-namespace Proem\Controller\Route;
+namespace Proem\Dispatcher\Route;
 
 /**
  * The _Map_ _Route_.
@@ -43,7 +43,7 @@ namespace Proem\Controller\Route;
  * url to retrieve the controller / action & params combinations.
  *
  * @category   Proem
- * @package    Proem\Controller\Route\Map
+ * @package    Proem\Dispatcher\Route\Map
  */
 class Map extends AbstractRoute
 {
