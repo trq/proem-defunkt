@@ -27,69 +27,82 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\IO\Response
+ * @package    Proem\Dispatcher\Route\AbstractRoute
  */
 
 /**
  * @namespace
  */
-namespace Proem\IO;
+namespace Proem\Dispatcher\Route;
 
 /**
+ * An Abstract Route Interface.
+ *
  * @category   Proem
- * @package    Proem\IO\Response
+ * @package    Proem\Dispatcher\Route\AbstractRoute
  */
-class Response
+abstract class AbstractRoute
 {
     /**
-     * Store the body of the response.
+     * Store a flag indicating a route match
      *
-     * @var string
+     * @var bool
      */
-    protected $_body;
+    protected $_matched = false;
 
     /**
-     * Set the reponse body.
+     * Store matched parameters within a Command object.
      *
-     * @param string $data
-     * @return Proem\IO\Response\AbstractResponse
+     * @var Proem\Dispatcher\Route\Command
      */
-    public function setBody($data)
+    protected $_command;
+
+    /**
+     * Setup the Command object.
+     */
+    public function __construct()
     {
-        $this->_body = $data;
+        $this->_command = new \Proem\Dispatcher\Command;
+    }
+
+    /**
+     * Was a match found?
+     *
+     * @return bool
+     */
+    public function getMatchFound()
+    {
+        return $this->_matched;
+    }
+
+    /**
+     * Set _matched flag.
+     *
+     * @return Proem\Dispatcher\Route\AbstractRoute
+     */
+    public function setMatchFound($bool = true)
+    {
+        $this->_matched = $bool;
         return $this;
     }
 
     /**
-     * Get the response body.
-     *
-     * @return string
+     * Retrieve the Command object.
      */
-    public function getBody()
+    public function getCommand()
     {
-        return $this->_body;
+        return $this->_command;
     }
 
     /**
-     * Send response to the browser.
-     */
-    public function send()
-    {
-        echo $this->_body;
-    }
-
-    /**
-     * Magic __toString functionality
+     * Method to actually test for a match.
      *
-     * Proxies to {@link send()} and returns response value as string
-     * using output buffering.
+     * If a match is found, $this->_matched should be set to true
+     * and $this->_params needs to be set to contain the relevent
+     * matched data.
      *
-     * @return string
+     * @param string $uri
+     * @param array $options Options dependent on your implementation.
      */
-    public function __toString()
-    {
-        ob_start();
-        $this->send();
-        return ob_get_clean();
-    }
+    abstract public function process($uri, $options = array());
 }

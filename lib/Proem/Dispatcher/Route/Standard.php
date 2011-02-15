@@ -22,32 +22,50 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
+ 
  */
 
 /**
  * @category   Proem
- * @package    Proem\Chain
+ * @package    Proem\Dispatcher\Route\Standard
  */
 
 /**
  * @namespace
  */
-namespace Proem;
+namespace Proem\Dispatcher\Route;
 
 /**
- * A concrete Proem\Chain\AbstractChain implementation.
+ * The standard concrete _Route_.
+ *
+ * Designed to be fast. This route simply takes a given url and splits it into
+ * an array.
+ *
+ * The parts of this array are then sent to the _Command_ object setting the first
+ * index to controller, the second to action and all others as params (which are
+ * in turn transformed into key => value pairs).
  *
  * @category   Proem
- * @package    Proem\Chain
+ * @package    Proem\Dispatcher\Route\Standard
  */
-class Chain extends Chain\AbstractChain
+class Standard extends AbstractRoute
 {
     /**
-     * Start the Chain in motion.
+     * process the given uri.
+     *
+     * @param string $uri
+     * @param array $options
      */
-    public function run(\Proem\Application $application) {
-        $event = $this->getInitialEvent();
-        $event->run($this, $application);
+    public function process($uri, $options = array()) {
+        $matches = explode('/', (string) trim($uri, '/'));
+        if (is_array($matches)) {
+            $this->getCommand()->setParam('controller', array_shift($matches));
+            $this->getCommand()->setParam('action', array_shift($matches));
+            if (count($matches)) {
+                $this->getCommand()->setParams($matches);
+            }
+            $this->setMatchFound();
+            $this->getCommand()->isPopulated(true);
+        }
     }
 }
