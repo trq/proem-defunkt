@@ -78,7 +78,8 @@ class Loader
     public static function load($class)
     {
         if (!class_exists($class, false)) {
-            self::getInstance()->_doLoad($class);
+            $class = ltrim($class, '\\_');
+            require_once str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class) . '.php';
         }
         return self::$_instance;
     }
@@ -99,7 +100,7 @@ class Loader
     }
 
     /**
-     * register the autoload function.
+     * Register the autoload function.
      *
      * @return bool
      */
@@ -108,13 +109,4 @@ class Loader
         return spl_autoload_register(array('Proem\Loader', 'load'));
     }
 
-    /**
-     * Change a class name to a path and attempt to 'require' it.
-     * @param string $class
-     */
-    private function _doLoad($class)
-    {
-        $class = ltrim($class, '\\_');
-        require_once str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class) . '.php';
-    }
 }
