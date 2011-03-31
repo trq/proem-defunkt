@@ -39,7 +39,7 @@ namespace Proem;
  * A simple class designed to store version information.
  *
  * I really only built this because I needed a class within the framework
- * the could be used to test the Proem\Loader.
+ * that could be used to test the Proem\Loader at the time.
  *
  * @todo Class could likely be removed.
  * 

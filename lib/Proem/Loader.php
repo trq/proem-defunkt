@@ -45,7 +45,9 @@ namespace Proem;
 class Loader
 {
     /**
-     * @var Origin_Loader
+     * Store an instance.
+     *
+     * @var Proem\Loader
      */
     private static $_instance;
 
@@ -59,7 +61,7 @@ class Loader
     /**
      * Get an instance.
      *
-     * @return Origin_Loader
+     * @return Proem\Loader
      */
     public static function getInstance()
     {
@@ -73,7 +75,7 @@ class Loader
      * If the class doesn't already exist, attempt to 'require' it.
      *
      * @param string $class
-     * @return Origin_Loader
+     * @return Proem\Loader
      */
     public static function load($class)
     {
@@ -88,7 +90,7 @@ class Loader
      * Add a path to the include_path
      *
      * @param string $path
-     * @return Origin_Loader
+     * @return Proem\Loader
      */
     public function addPath($path)
     {

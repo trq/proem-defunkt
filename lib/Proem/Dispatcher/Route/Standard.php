@@ -51,7 +51,7 @@ namespace Proem\Dispatcher\Route;
 class Standard extends AbstractRoute
 {
     /**
-     * process the given uri.
+     * Process the given uri.
      *
      * @param string $uri
      * @param array $options
