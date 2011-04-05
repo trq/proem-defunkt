@@ -32,6 +32,6 @@ $application->getChain()->registerEvents(
 
 /**
  * Start the application.
- * Thsi simply proxies through to the Chain's run() method.
+ * This simply proxies through to the Chain's run() method.
  */
 $application->run();
