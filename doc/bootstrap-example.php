@@ -26,6 +26,7 @@ $application->getChain()->registerEvents(
     array(
 	'request'	=> new Proem\Chain\Event\setupHttpRequest,
 	'response'	=> new Proem\Chain\Event\setupHttpResponse,
+	'route'		=> new Proem\Chain\Event\setupRouter,
 	'dispatch'	=> new Proem\Chain\Event\setupDispatch
     )    
 );
