@@ -84,8 +84,8 @@ class Command
      */
     public function __construct()
     {
-        $this->_data['controller'] = null;
-        $this->_data['action'] = null;
+        $this->_data['controller'] = 'index';
+        $this->_data['action'] = 'index';
     }
 
     /**
@@ -109,7 +109,7 @@ class Command
     public function setParams(Array $params)
     {
         if ($this->_isAssoc($params)) {
-            $params = $this->_flatten($params);
+            $params = $this->flatten($params);
         }
         $tmp = array();
         for ($i = 0; $i <= count($params); $i = $i+2) {
@@ -142,7 +142,7 @@ class Command
      *
      * @return array
      */
-    public function geParams()
+    public function getParams()
     {
         return $this->_data;
     }
@@ -182,8 +182,11 @@ class Command
      * @param array $a
      * @return array
      */
-    private function _flatten(Array $a)
+    public function flatten($arr=null)
     {
+        if (is_null($arr)) {
+            $a = $this->_data;
+        }
         $tmp = array();
         foreach ($a as $k => $v) {
             $tmp[] = $k;
