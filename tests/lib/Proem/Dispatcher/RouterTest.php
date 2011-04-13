@@ -65,7 +65,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
     public function dataProvider()
     {
         return array(
-            array('/', 'home', null),
+            array('/', 'home', 'index'),
             array('/login', 'auth', 'login'),
             array('/logout', 'auth', 'logout')
          );

@@ -26,12 +26,13 @@ $application->getChain()->registerEvents(
     array(
 	'request'	=> new Proem\Chain\Event\setupHttpRequest,
 	'response'	=> new Proem\Chain\Event\setupHttpResponse,
+	'route'		=> new Proem\Chain\Event\setupRouter,
 	'dispatch'	=> new Proem\Chain\Event\setupDispatch
     )    
 );
 
 /**
  * Start the application.
- * Thsi simply proxies through to the Chain's run() method.
+ * This simply proxies through to the Chain's run() method.
  */
 $application->run();
