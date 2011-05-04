@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -37,7 +37,7 @@ namespace Proem\Dispatcher\Route;
 
 /**
  * The _Fixed_ _Route_.
- * 
+ *
  * A concrete _Route_ designed to bypass routing (does that even make sense?)
  * and hand everything to a default controller / action with the parts of the
  * original uri sent to the _Command_ object as params.
@@ -67,7 +67,7 @@ class Fixed extends AbstractRoute
     {
         $this->getCommand()->setParam('controller', isset($options['controller']) ? $options['controller'] : null);
         $this->getCommand()->setParam('action', isset($options['action']) ? $options['action'] : null);
-        $this->getCommand()->setParam('params', explode('/', (string) trim($uri,'/')));
+        $this->getCommand()->setParams(explode('/', (string) trim($uri, '/')));
         $this->setMatchFound();
         $this->getCommand()->isPopulated(true);
     }
