@@ -40,3 +40,5 @@ Create a fork of the [Proem Github project](http://github.com/trq/proem) ([More 
 Before you write any code be sure to create a new branch in your repository in which all the changes will be committed. More details about Git branches can be found in the [Pro Git chapter on branches](http://progit.org/book/ch3-1.html) and in the chapter on [remote branches](http://progit.org/book/ch3-5.html).
 
 After your new branch has been pushed to your repository you can now send a [pull request](http://help.github.com/pull-requests/). Be sure to reference the bug(s) that you're fixing in the commit messages and in the pull request description (this helps us to track the changes easier).
+
+We (I) follow the git flow branching model as described by nvie [here](http://nvie.com/posts/a-successful-git-branching-model) using his awesome tool [git-flow](https://github.com/nvie/gitflow) hosted right here on github.

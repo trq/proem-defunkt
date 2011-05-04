@@ -41,13 +41,17 @@ namespace Proem;
  */
 class Dispatcher
 {
-    private $_command;
+    private $_attempts = 0;
+
+    private $_commands = array();
+
+    private $_stashedCommands = array();
 
     private $_isReady = false;
 
     public function __construct(\Proem\Dispatcher\Command $command)
     {
-        $this->_command = $command;
+        $this->_commands[] = $command;
         $this->_isExecutable();
     }
 
@@ -58,7 +62,12 @@ class Dispatcher
 
     public function getCommand()
     {
-        return $this->_command;
+        return array_pop($this->_commands);
+    }
+
+    public function getCommands()
+    {
+        return $this->_commands;
     }
 
     public function dispatch()
@@ -71,6 +80,7 @@ class Dispatcher
         if ($this->_runTest()) {
             $this->_isReady = true;
         } else {
+            // $this->_isExecutable();
             $this->_injectDefaultController();
             if ($this->_runTest()) {
                 $this->_isReady = true;
@@ -80,17 +90,18 @@ class Dispatcher
 
     private function _runTest()
     {
-        if (class_exists($this->_command->controller)) {
-            if (method_exists($this->_command->controller, $this->_command->action)) {
+        $this->_attempts++;
+        if (class_exists($this->_commands[$this->_attempts-1]->controller)) {
+            if (method_exists($this->_commands[$this->_attempts-1]->controller, $this->_commands[$this->_attempts-1]->action)) {
                 return true;
             }
-	}
+	    }
         return false;
     }
 
     private function _injectDefaultController()
     {
-        $params = $this->_command->flatten();
+        $params = $this->_commands[$this->_attempts-1]->flatten();
 
         $params[0] = $params[2];
         unset($params[2]);
@@ -100,8 +111,8 @@ class Dispatcher
             $result[] = $param;
         }
 
-        $command = new \Proem\Dispatcher\Command;
-        $command->setParams($result);
+        $this->_commands[$this->_attempts] = new \Proem\Dispatcher\Command;
+        $this->_commands[$this->_attempts]->setParams($result);
 
     }
 }

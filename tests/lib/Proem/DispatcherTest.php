@@ -25,13 +25,22 @@ class Proem_DispatcherTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testIsDispatchable()
+    public function testIsGoodRouteDispatchable()
     {
         $command = new \Proem\Dispatcher\Command;
         $command->setParam('controller', 'Proem\Dispatcher\Command');
-	$command->setParam('action', 'setParam');
+	    $command->setParam('action', 'setParam');
         $command->setParam('foo', 'bar');
         $dispatcher = new \Proem\Dispatcher($command);
         $this->assertTrue($dispatcher->isReady());
+    }
+
+    public function testIsBadRouteFixable()
+    {
+        $command = new \Proem\Dispatcher\Command;
+        $command->setParam('controller', 'controller');
+	    $command->setParam('action', 'action');
+        $dispatcher = new \Proem\Dispatcher($command);
+        $this->assertFalse($dispatcher->isReady());
     }
 }
