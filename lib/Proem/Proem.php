@@ -42,11 +42,11 @@ namespace Proem;
  * that could be used to test the Proem\Loader at the time.
  *
  * @todo Class could likely be removed.
- * 
+ *
  * @category   Proem
  * @package    Proem\Proem
  */
 class Proem
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.0.2';
 }
