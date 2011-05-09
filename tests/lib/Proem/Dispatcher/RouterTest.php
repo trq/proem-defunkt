@@ -2,6 +2,7 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Exception.php';
+require_once 'lib/Proem/IO/Url.php';
 require_once 'lib/Proem/Dispatcher/Command.php';
 require_once 'lib/Proem/Dispatcher/Route/AbstractRoute.php';
 require_once 'lib/Proem/Dispatcher/Route/Map.php';
@@ -11,7 +12,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 {
     public function testDefaultMapedRoute()
     {
-        $router = new \Proem\Dispatcher\Router('/foo/bar/a/b');
+        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com/foo/bar/a/b'));
         $command = $router->map(
             'default',
             new \Proem\Dispatcher\Route\Map
@@ -24,7 +25,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testVerboseDefaultMapedRoute()
     {
-        $router = new \Proem\Dispatcher\Router('/foo/bar/a/b');
+        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com/foo/bar/a/b'));
         $command = $router->map(
             'simple',
             new \Proem\Dispatcher\Route\Map,
@@ -45,7 +46,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testTargetedMapedRoute()
     {
-        $router = new \Proem\Dispatcher\Router('/login');
+        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com/login'));
         $command = $router->map(
              'simple',
              new \Proem\Dispatcher\Route\Map,
@@ -76,7 +77,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
      */
     public function testSeriesOfMappedRoutes($uri, $controller, $action)
     {
-        $router = new \Proem\Dispatcher\Router($uri);
+        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com' . $uri));
         $command = $router
         ->map(
             'home-page',
@@ -111,7 +112,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 
     public function testAnotherMappedRoute()
     {
-        $router = new \Proem\Dispatcher\Router('/user/view/12');
+        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('/user/view/12'));
         $command = $router
         ->map(
             'profile',

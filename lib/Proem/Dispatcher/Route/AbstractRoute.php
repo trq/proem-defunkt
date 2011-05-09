@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -101,8 +101,8 @@ abstract class AbstractRoute
      * and $this->_params needs to be set to contain the relevent
      * matched data.
      *
-     * @param string $uri
+     * @param |proem\IO\Url $url
      * @param array $options Options dependent on your implementation.
      */
-    abstract public function process($uri, $options = array());
+    abstract public function process(\Proem\IO\Url $url, $options = array());
 }

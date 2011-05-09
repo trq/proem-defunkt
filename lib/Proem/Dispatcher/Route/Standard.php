@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -51,21 +51,19 @@ namespace Proem\Dispatcher\Route;
 class Standard extends AbstractRoute
 {
     /**
-     * Process the given uri.
+     * Process the given url.
      *
-     * @param string $uri
+     * @param \Proem\IO\Url $url
      * @param array $options
      */
-    public function process($uri, $options = array()) {
-        $matches = explode('/', (string) trim($uri, '/'));
-        if (is_array($matches)) {
-            $this->getCommand()->setParam('controller', array_shift($matches));
-            $this->getCommand()->setParam('action', array_shift($matches));
-            if (count($matches)) {
-                $this->getCommand()->setParams($matches);
-            }
-            $this->setMatchFound();
-            $this->getCommand()->isPopulated(true);
+    public function process(\Proem\IO\Url $url, $options = array()) {
+        $matches = $url->getPathAsArray();
+        $this->getCommand()->setParam('controller', array_shift($matches));
+        $this->getCommand()->setParam('action', array_shift($matches));
+        if (count($matches)) {
+            $this->getCommand()->setParams($matches);
         }
+        $this->setMatchFound();
+        $this->getCommand()->isPopulated(true);
     }
 }
