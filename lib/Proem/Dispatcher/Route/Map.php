@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -48,7 +48,7 @@ namespace Proem\Dispatcher\Route;
 class Map extends AbstractRoute
 {
     /**
-     * Process the gievn uri.
+     * Process the gievn url.
      *
      * This route takes a simplified series of patterns such as :controller and
      * replaces them with more complex regular expressions which are then used
@@ -71,14 +71,14 @@ class Map extends AbstractRoute
      * to be added to the _Command_ object as params (which are in turn transformed
      * into key => value pairs).
      *
-     * @param string $uri
+     * @param \Proem\IO\Url $url
      * @param array $options
      */
-    public function process($uri, $options = array())
+    public function process(\Proem\IO\Url $url, $options = array())
     {
         // A standard rule.
         $rule = isset($options['rule']) ? $options['rule'] : '/:controller/:action/:params';
-        
+
         $target = isset($options['target']) ? $options['target'] : array();
         $filter = isset($options['filter']) ? $options['filter'] : array();
 
@@ -105,8 +105,7 @@ class Map extends AbstractRoute
             $rule
         ) . '/?';
 
-        if (preg_match('@^' . $regex . '$@', $uri, $values)) {
-
+        if (preg_match('@^' . $regex . '$@', $url->getPath(), $values)) {
             array_shift($values);
 
             foreach ($keys as $index => $value) {
@@ -123,7 +122,7 @@ class Map extends AbstractRoute
                 // parse it into an array and send it to setParams() instead
                 // of the singular setParam.
                 if (strpos($value, '/') !== false) {
-                    $this->getCommand()->setParams(explode('/', trim($value, '/')));
+                    $this->getCommand()->setParams($this->createAssocArray($value));
                 } else {
                     $this->getCommand()->setParam($key, $value);
                 }
@@ -132,4 +131,5 @@ class Map extends AbstractRoute
             $this->getCommand()->isPopulated(true);
         }
     }
+
 }

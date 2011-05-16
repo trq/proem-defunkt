@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -42,18 +42,18 @@ namespace Proem\Dispatcher;
 class Router
 {
     /**
-     * Store the request uri
+     * Store the request url
      *
      * @var string
      */
-    private $_requestUri;
+    private $_requestUrl;
 
     /**
-     * Store the base uri
+     * Store the base url
      *
      * @var string
      */
-    private $_baseUri = '';
+    private $_baseUrl = '';
 
     /**
      * Store our routes
@@ -65,33 +65,33 @@ class Router
     /**
      * Setup
      *
-     * @param string $uri
+     * @param string $url
      */
-    public function __construct($uri)
+    public function __construct(\Proem\IO\Url $url)
     {
-        $this->_requestUri = substr($uri, strlen($this->getBaseUri()));
+        $this->_requestUrl = $url;
         $this->_routes = array();
     }
 
     /**
-     * Set the base uri
+     * Set the base url
      *
      * @param string $path
      */
-    public function setBaseUri($path)
+    public function setBaseUrl($path)
     {
-        $this->_baseDir = $path;
+        $this->_baseUrl = $path;
         return $this;
     }
 
     /**
-     * Retrieve the base uri
+     * Retrieve the base url
      *
      * @return string
      */
-    public function getBaseUri()
+    public function getBaseUrl()
     {
-        return $this->_baseUri;
+        return $this->_baseUrl;
     }
 
     /**
@@ -116,7 +116,7 @@ class Router
     {
         foreach ($this->_routes as $name => $data) {
             $route = $data['route'];
-            $route->process($this->_requestUri, $data['options']);
+            $route->process($this->_requestUrl, $data['options']);
             if ($route->getMatchFound() && $route->getCommand()->isPopulated()) {
                 break;
             }

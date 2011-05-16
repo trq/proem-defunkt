@@ -1,6 +1,7 @@
 <?php
 
 require_once 'PHPUnit/Autoload.php';
+require_once 'lib/Proem/IO/Url.php';
 require_once 'lib/Proem/Exception.php';
 require_once 'lib/Proem/Dispatcher/Command.php';
 require_once 'lib/Proem/Dispatcher/Route/AbstractRoute.php';
@@ -13,7 +14,7 @@ class ProemControllerRouteStandardTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_route = new Proem\Dispatcher\Route\Standard;
-        $this->_route->process('/foo/bar/a/b');
+        $this->_route->process(new \Proem\IO\Url('http://domain.com/foo/bar/a/b'));
     }
 
     public function testParamKeysExist()

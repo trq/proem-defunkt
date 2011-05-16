@@ -45,12 +45,15 @@ class Dispatcher
 
     private $_commands = array();
 
+    private $_url;
+
     private $_stashedCommands = array();
 
     private $_isReady = false;
 
-    public function __construct(\Proem\Dispatcher\Command $command)
+    public function __construct(\Proem\IO\Url $url, \Proem\Dispatcher\Command $command)
     {
+        $this->_url = $url;
         $this->_commands[] = $command;
         $this->_isExecutable();
     }
@@ -101,18 +104,11 @@ class Dispatcher
 
     private function _injectDefaultController()
     {
-        $params = $this->_commands[$this->_attempts-1]->flatten();
-
-        $params[0] = $params[2];
-        unset($params[2]);
-
-        $result = array('controller', 'index');
-        foreach ($params as $param) {
-            $result[] = $param;
-        }
+        $params = $this->_url->getPathAsAssoc();
+        $params = array_merge(array('controller' => 'index'), $params);
 
         $this->_commands[$this->_attempts] = new \Proem\Dispatcher\Command;
-        $this->_commands[$this->_attempts]->setParams($result);
+        $this->_commands[$this->_attempts]->setParams($params);
 
     }
 }

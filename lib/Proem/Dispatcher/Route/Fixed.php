@@ -51,7 +51,7 @@ namespace Proem\Dispatcher\Route;
 class Fixed extends AbstractRoute
 {
     /**
-     * Process the given uri.
+     * Process the given url.
      *
      * Sets the controller & action params within the _Command_ object to those
      * passed in via the $options array, then sets the *match found* flag as well
@@ -60,14 +60,14 @@ class Fixed extends AbstractRoute
      * The entire uri is then sent to the _Command_ object as params (which are
      * in turn transformed into key => value pairs).
      *
-     * @param string $uri
+     * @param \Proem\IO\Url $url
      * @param array $options
      */
-    public function process($uri, $options = array())
+    public function process(\Proem\IO\Url $url, $options = array())
     {
         $this->getCommand()->setParam('controller', isset($options['controller']) ? $options['controller'] : null);
         $this->getCommand()->setParam('action', isset($options['action']) ? $options['action'] : null);
-        $this->getCommand()->setParams(explode('/', (string) trim($uri, '/')));
+        $this->getCommand()->setParams($url->getPathAsAssoc());
         $this->setMatchFound();
         $this->getCommand()->isPopulated(true);
     }

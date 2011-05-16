@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -22,7 +22,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
- 
+
  */
 
 /**
@@ -108,18 +108,8 @@ class Command
      */
     public function setParams(Array $params)
     {
-        if ($this->_isAssoc($params)) {
-            $params = $this->flatten($params);
-        }
-        $tmp = array();
-        for ($i = 0; $i <= count($params); $i = $i+2) {
-            if (isset($params[$i+1])) {
-                $tmp[(string) $params[$i]] = (string) $params[$i+1];
-            } else {
-                break;
-            }
-        }
-        $this->_data = array_merge($this->_data, $tmp);
+        $this->_data = array_merge($this->_data, $params);
+        return $this;
     }
 
     /**
@@ -165,33 +155,4 @@ class Command
         return $this;
     }
 
-    /**
-     * http://stackoverflow.com/questions/173400/php-arrays-a-good-way-to-check-if-an-array-is-associative-or-sequential
-     *
-     * @param array $array
-     * @return bool
-     */
-    private function _isAssoc(Array $array)
-    {
-        return (bool)count(array_filter(array_keys($array), 'is_string'));
-    }
-
-    /**
-     * Flatten an associative array into a numerically indexed array.
-     *
-     * @param array $a
-     * @return array
-     */
-    public function flatten($arr=null)
-    {
-        if (is_null($arr)) {
-            $a = $this->_data;
-        }
-        $tmp = array();
-        foreach ($a as $k => $v) {
-            $tmp[] = $k;
-            $tmp[] = $v;
-        }
-        return $tmp;
-    }
 }
