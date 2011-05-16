@@ -106,7 +106,6 @@ class Map extends AbstractRoute
         ) . '/?';
 
         if (preg_match('@^' . $regex . '$@', $url->getPath(), $values)) {
-
             array_shift($values);
 
             foreach ($keys as $index => $value) {
@@ -123,7 +122,7 @@ class Map extends AbstractRoute
                 // parse it into an array and send it to setParams() instead
                 // of the singular setParam.
                 if (strpos($value, '/') !== false) {
-                    $this->getCommand()->setParams(explode('/', trim($value, '/')));
+                    $this->getCommand()->setParams($this->createAssocArray($value));
                 } else {
                     $this->getCommand()->setParam($key, $value);
                 }
@@ -132,4 +131,5 @@ class Map extends AbstractRoute
             $this->getCommand()->isPopulated(true);
         }
     }
+
 }

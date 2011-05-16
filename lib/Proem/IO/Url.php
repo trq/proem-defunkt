@@ -76,12 +76,12 @@ class Url
         $this->_parsedUrl = parse_url($url);
     }
 
-    public function getUrlString()
+    public function getString()
     {
         return $this->_urlString;
     }
 
-    public function getAssociativePath()
+    public function getPathAsAssoc()
     {
         if ($this->_assocPath === null) {
             $this->_setAssocPath();
@@ -89,10 +89,15 @@ class Url
         return $this->_assocPath;
     }
 
+    /*
+     * This functionality is basically duplicated within
+     * \Proem\Dispatcher\Route\AbstractRoute
+     * This replication should be fixed.
+     */
     private function _setAssocPath()
     {
         $tmp = array();
-        $params = $this->getPath();
+        $params = $this->getPathAsArray();
         for ($i = 0; $i <= count($params); $i = $i+2) {
             if (isset($params[$i+1])) {
                 $tmp[(string) $params[$i]] = (string) $params[$i+1];
@@ -106,23 +111,19 @@ class Url
 
     public function getPathAsArray()
     {
-        $p = explode('/', trim($this->getPath(), '/'));
-        echo 'here';
-        print_r($this->getPath());
-        echo "endhere\n";
-        return $p;
+        return explode('/', trim($this->_parsedUrl['path'], '/'));
     }
 
     public function __call($method, $args)
     {
         if (substr($method, 0, 3) == 'get') {
-            $key = substr($method, 3);
+            $method = substr($method, 3);
         }
-        $key = strtolower($method);
+        $method = strtolower($method);
         if (array_key_exists($method, $this->_parsedUrl)) {
             return $this->_parsedUrl[$method];
         }
-        return true;
+        return false;
     }
 
 }

@@ -95,6 +95,27 @@ abstract class AbstractRoute
     }
 
     /**
+     * The functionality contained within this function
+     * is currently duplicated within \Proem\IO\Url
+     * this needs to be fixed.
+     */
+    public function createAssocArray($params)
+    {
+        $tmp = array();
+        if (!is_array($params)) {
+            $params = explode('/', trim($params, '/'));
+        }
+        for ($i = 0; $i <= count($params); $i = $i+2) {
+            if (isset($params[$i+1])) {
+                $tmp[(string) $params[$i]] = (string) $params[$i+1];
+            } else {
+                break;
+            }
+        }
+        return $tmp;
+    }
+
+    /**
      * Method to actually test for a match.
      *
      * If a match is found, $this->_matched should be set to true

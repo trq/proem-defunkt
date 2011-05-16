@@ -15,7 +15,6 @@ class ProemControllerRouteMapTest extends PHPUnit_Framework_TestCase
     {
         $this->_route = new Proem\Dispatcher\Route\Map;
         $url = new \Proem\IO\Url('http://domain.com/foo/bar/a/b');
-        print_r($url);
         $this->_route->process($url,
             array(
                 'rule'     => '/:controller/:action/:params',

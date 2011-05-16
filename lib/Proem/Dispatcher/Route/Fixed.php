@@ -67,7 +67,7 @@ class Fixed extends AbstractRoute
     {
         $this->getCommand()->setParam('controller', isset($options['controller']) ? $options['controller'] : null);
         $this->getCommand()->setParam('action', isset($options['action']) ? $options['action'] : null);
-        $this->getCommand()->setParams($url->getPathAsArray());
+        $this->getCommand()->setParams($url->getPathAsAssoc());
         $this->setMatchFound();
         $this->getCommand()->isPopulated(true);
     }
