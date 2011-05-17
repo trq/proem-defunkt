@@ -36,6 +36,6 @@ class Proem_LoaderTest extends PHPUnit_Framework_TestCase
         $loader = Proem\Loader::getInstance();
         $loader->addPath('lib'); //adds the Proem/lib directory.
         $loader->load('Proem\Proem');
-        $this->assertEquals('0.0.2', Proem\Proem::VERSION);
+        $this->assertInstanceOf('\Proem\Proem', new Proem\Proem);
     }
 }

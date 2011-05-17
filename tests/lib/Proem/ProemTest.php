@@ -5,8 +5,8 @@ require_once 'lib/Proem/Proem.php';
 
 class Proem_ProemTest extends PHPUnit_Framework_TestCase
 {
-    public function testVersion()
+    public function testCanInstantiate()
     {
-        $this->assertEquals('0.0.2', Proem\Proem::VERSION);
+        $this->assertInstanceOf('\Proem\Proem', new Proem\Proem);
     }
 }
