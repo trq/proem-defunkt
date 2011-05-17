@@ -122,7 +122,7 @@ abstract class AbstractRoute
      * and $this->_params needs to be set to contain the relevent
      * matched data.
      *
-     * @param |proem\IO\Url $url
+     * @param \Proem\IO\Url $url
      * @param array $options Options dependent on your implementation.
      */
     abstract public function process(\Proem\IO\Url $url, $options = array());

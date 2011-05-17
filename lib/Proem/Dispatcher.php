@@ -41,16 +41,41 @@ namespace Proem;
  */
 class Dispatcher
 {
+    /**
+     * Store a count of _dispatch_ attempts.
+     *
+     * @var int
+     */
     private $_attempts = 0;
 
+    /**
+     * For each attempt, store a command object.
+     *
+     * @var array
+     */
     private $_commands = array();
 
+    /**
+     * The url object.
+     *
+     * @var \Proem\IO\Url
+     */
     private $_url;
 
-    private $_stashedCommands = array();
-
+    /**
+     * Store a flag indicating wether or not the current
+     * command is read for dispatching.
+     *
+     * @var bool
+     */
     private $_isReady = false;
 
+    /**
+     * Instantiate the Dispatcher
+     *
+     * @param \Proem\IO\Url $url
+     * @param \Proem\Dispatcher\Command $command
+     */
     public function __construct(\Proem\IO\Url $url, \Proem\Dispatcher\Command $command)
     {
         $this->_url = $url;
@@ -58,26 +83,51 @@ class Dispatcher
         $this->_isExecutable();
     }
 
+    /**
+     * Check if the current command is ready for dispatching.
+     *
+     * @return bool
+     */
     public function isReady()
     {
         return $this->_isReady;
     }
 
+    /**
+     * Retrieve the current _Command_ object.
+     *
+     * @return \Proem\Dispatcher\Command
+     */
     public function getCommand()
     {
         return array_pop($this->_commands);
     }
 
+    /**
+     * Get an array of all _Command_ objects that might have
+     * been created during the _dispatch_ process.
+     *
+     * @return array
+     */
     public function getCommands()
     {
         return $this->_commands;
     }
 
+    /**
+     * Hand control over to the controller object.
+     */
     public function dispatch()
     {
         // actually execute the controller->action()
     }
 
+    /**
+     * Test to see if the current _Command_ is dispatchable, if not
+     * attempt to inject some defaults and try again.
+     *
+     * @return bool
+     */
     private function _isExecutable()
     {
         if ($this->_runTest()) {
@@ -91,6 +141,11 @@ class Dispatcher
         }
     }
 
+    /**
+     * Test to see if the current _Command_ is dispatchable.
+     *
+     * @return bool
+     */
     private function _runTest()
     {
         $this->_attempts++;
@@ -102,6 +157,12 @@ class Dispatcher
         return false;
     }
 
+    /**
+     * Inject the default controller & action into a newly created
+     * _Command_ object.
+     *
+     * @return void
+     */
     private function _injectDefaultController()
     {
         $params = $this->_url->getPathAsAssoc();

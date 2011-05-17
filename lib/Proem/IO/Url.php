@@ -41,25 +41,33 @@ namespace Proem\IO;
  */
 class Url
 {
-    /*
-     *  Array
-     *  (
-     *      [scheme] => http
-     *      [host] => hostname
-     *      [user] => username
-     *      [pass] => password
-     *      [path] => /path
-     *      [query] => arg=value
-     *      [fragment] => anchor
-     *  )
+    /**
+     * Store our url fragments.
      *
+     * @var array
      */
     private $_parsedUrl;
 
+    /**
+     * The original url string.
+     *
+     * @var string
+     */
     private $_urlString;
 
+    /**
+     * Once a path has been converted into an associative
+     * array of key value pairs, it is stored here.
+     *
+     * @var array
+     */
     private $_assocPath = null;
 
+    /**
+     * Create our Url object from a given string representation.
+     *
+     * @return void
+     */
     public function __construct($url = null)
     {
         if ($url === null) {
@@ -76,23 +84,15 @@ class Url
         $this->_parsedUrl = parse_url($url);
     }
 
-    public function getString()
-    {
-        return $this->_urlString;
-    }
-
-    public function getPathAsAssoc()
-    {
-        if ($this->_assocPath === null) {
-            $this->_setAssocPath();
-        }
-        return $this->_assocPath;
-    }
-
-    /*
+    /**
+     * Do the work of actually creating an associative array
+     * from a numerically indexed array.
+     *
      * This functionality is basically duplicated within
      * \Proem\Dispatcher\Route\AbstractRoute
      * This replication should be fixed.
+     *
+     * @return void
      */
     private function _setAssocPath()
     {
@@ -109,11 +109,47 @@ class Url
         return $this;
     }
 
-    public function getPathAsArray()
+    /**
+     * Retrieve the original url as a string.
+     *
+     * @return string
+     */
+    public function getString()
     {
-        return explode('/', trim($this->_parsedUrl['path'], '/'));
+        return $this->_urlString;
     }
 
+    /**
+     * Get the path portion of the url as an associative array
+     * of key => value pairs.
+     *
+     * @return array
+     */
+    public function getPathAsAssoc()
+    {
+        if ($this->_assocPath === null) {
+            $this->_setAssocPath();
+        }
+        return $this->_assocPath;
+    }
+
+    /**
+     * Break the part fragment of the url into an array.
+     *
+     * @return array
+     */
+    public function getPathAsArray()
+    {
+        return explode('/', trim($this->getPath(), '/'));
+    }
+
+    /**
+     * Magic __call method used to retrieve the contents of the internal
+     * $_parsedUrl array as created via parse_url().
+     *
+     * @link http://php.net/parse_url
+     * @return string|int
+     */
     public function __call($method, $args)
     {
         if (substr($method, 0, 3) == 'get') {
