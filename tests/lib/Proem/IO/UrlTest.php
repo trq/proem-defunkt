@@ -21,7 +21,7 @@ class Proem_UrlTest extends PHPUnit_Framework_TestCase
 
     public function testAsString()
     {
-        $this->assertEquals($this->_url->getString(), 'http://domain.com/foo/is/bar/bar/is/good');
+        $this->assertEquals($this->_url->getAsString(), 'http://domain.com/foo/is/bar/bar/is/good');
     }
 
     public function testPathAsArray()
@@ -37,6 +37,14 @@ class Proem_UrlTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('foo', $this->_url->getPathAsAssoc());
         $this->assertArrayHasKey('bar', $this->_url->getPathAsAssoc());
         $this->assertArrayHasKey('is', $this->_url->getPathAsAssoc());
+    }
+
+    public function testStripsBaseUrl()
+    {
+        $this->_url->setBaseUrl('/foo');
+        $this->assertArrayHasKey('is', $this->_url->getPathAsAssoc());
+        $parts = $this->_url->getPathAsArray();
+        $this->assertEquals($parts[0], 'is');
     }
 
 }

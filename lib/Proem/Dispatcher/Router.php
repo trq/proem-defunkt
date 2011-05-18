@@ -44,16 +44,9 @@ class Router
     /**
      * Store the request url
      *
-     * @var string
+     * @var \Proem\IO\Url
      */
     private $_requestUrl;
-
-    /**
-     * Store the base url
-     *
-     * @var string
-     */
-    private $_baseUrl = '';
 
     /**
      * Store our routes
@@ -71,27 +64,6 @@ class Router
     {
         $this->_requestUrl = $url;
         $this->_routes = array();
-    }
-
-    /**
-     * Set the base url
-     *
-     * @param string $path
-     */
-    public function setBaseUrl($path)
-    {
-        $this->_baseUrl = $path;
-        return $this;
-    }
-
-    /**
-     * Retrieve the base url
-     *
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        return $this->_baseUrl;
     }
 
     /**

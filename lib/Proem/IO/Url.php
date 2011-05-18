@@ -56,12 +56,11 @@ class Url
     private $_urlString;
 
     /**
-     * Once a path has been converted into an associative
-     * array of key value pairs, it is stored here.
+     * Store our base url.
      *
-     * @var array
+     * @var string
      */
-    private $_assocPath = null;
+    private $_baseUrl = '';
 
     /**
      * Create our Url object from a given string representation.
@@ -85,19 +84,51 @@ class Url
     }
 
     /**
-     * Do the work of actually creating an associative array
-     * from a numerically indexed array.
+     * Set the base url, this will be trimmed from all returned paths.
      *
-     * This functionality is basically duplicated within
-     * \Proem\Dispatcher\Route\AbstractRoute
-     * This replication should be fixed.
-     *
-     * @return void
+     * @return \Proem\IO\Url
      */
-    private function _setAssocPath()
+    public function setBaseUrl($base) {
+        $this->_baseUrl = $base;
+        return $this;
+    }
+
+    /**
+     * Retrieve the base url.
+     *
+     * @return string|array
+     */
+    public function getBaseUrl($array = false) {
+        if (!$array) {
+            return $this->_baseUrl;
+        } else {
+            return explode('/', trim($this->_baseUrl, '/'));
+        }
+    }
+
+    /**
+     * Get the path portion of the url as an associative array
+     * of key => value pairs.
+     *
+     * By default, this function strips the baseUrl from the returned array.
+     *
+     * @param bool $strip Wether or not to strip the base url from the returned value.
+     * @return array
+     */
+    public function getPathAsAssoc($strip = true)
     {
         $tmp = array();
+        $base = $this->getBaseurl(true);
         $params = $this->getPathAsArray();
+
+        if ($strip) {
+            foreach ($base as $token) {
+                if ($params[0] == $token) {
+                    array_shift($params);
+                }
+            }
+        }
+
         for ($i = 0; $i <= count($params); $i = $i+2) {
             if (isset($params[$i+1])) {
                 $tmp[(string) $params[$i]] = (string) $params[$i+1];
@@ -105,8 +136,7 @@ class Url
                 break;
             }
         }
-        $this->_assocPath = $tmp;
-        return $this;
+        return $tmp;
     }
 
     /**
@@ -114,23 +144,9 @@ class Url
      *
      * @return string
      */
-    public function getString()
+    public function getAsString()
     {
         return $this->_urlString;
-    }
-
-    /**
-     * Get the path portion of the url as an associative array
-     * of key => value pairs.
-     *
-     * @return array
-     */
-    public function getPathAsAssoc()
-    {
-        if ($this->_assocPath === null) {
-            $this->_setAssocPath();
-        }
-        return $this->_assocPath;
     }
 
     /**
@@ -140,7 +156,7 @@ class Url
      */
     public function getPathAsArray()
     {
-        return explode('/', trim($this->getPath(), '/'));
+        return explode('/', trim(str_replace($this->getBaseUrl(), '', $this->getPath()), '/'));
     }
 
     /**
