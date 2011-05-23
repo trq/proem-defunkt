@@ -9,19 +9,24 @@ class Proem_UrlTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_url = new \Proem\IO\Url('http://domain.com/foo/is/bar/bar/is/good');
+        $this->_url = new \Proem\IO\Url('http://domain.com/foo/is/bar/bar/is/good/extra');
     }
 
     public function testGetter()
     {
         $this->assertEquals($this->_url->getScheme(), 'http');
         $this->assertEquals($this->_url->getHost(), 'domain.com');
-        $this->assertEquals($this->_url->getPath(), '/foo/is/bar/bar/is/good');
+        $this->assertEquals($this->_url->getPath(), '/foo/is/bar/bar/is/good/extra');
+    }
+
+    public function testStash()
+    {
+        $this->assertEquals('extra', $this->_url->getStash());
     }
 
     public function testAsString()
     {
-        $this->assertEquals($this->_url->getAsString(), 'http://domain.com/foo/is/bar/bar/is/good');
+        $this->assertEquals($this->_url->getAsString(), 'http://domain.com/foo/is/bar/bar/is/good/extra');
     }
 
     public function testPathAsArray()

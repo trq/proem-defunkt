@@ -63,6 +63,13 @@ class Url
     private $_baseUrl = '';
 
     /**
+     * Stash any odd parameters left over.
+     *
+     * @var string|int
+     */
+    private $_stash;
+
+    /**
      * Create our Url object from a given string representation.
      *
      * @return void
@@ -114,6 +121,10 @@ class Url
      *
      * @param bool $strip Wether or not to strip the base url from the returned value.
      * @return array
+     *
+     * @todo The result of this function call should likely be cached, I'm not
+     * however quite sure of the conscequences of doing so at this stage. Will
+     * open a ticket.
      */
     public function getPathAsAssoc($strip = true)
     {
@@ -133,10 +144,21 @@ class Url
             if (isset($params[$i+1])) {
                 $tmp[(string) $params[$i]] = (string) $params[$i+1];
             } else {
+                if (isset($params[$i])) {
+                    $this->_stash = (string) $params[$i];
+                }
                 break;
             }
         }
         return $tmp;
+    }
+
+    public function getStash()
+    {
+        if ($this->_stash == null) {
+            $this->getPathAsAssoc();
+        }
+        return $this->_stash;
     }
 
     /**
