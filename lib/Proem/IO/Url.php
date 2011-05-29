@@ -69,6 +69,8 @@ class Url
      */
     private $_stash;
 
+    private $_urlAsAssoc = array();
+
     /**
      * Create our Url object from a given string representation.
      *
@@ -126,7 +128,7 @@ class Url
      * however quite sure of the conscequences of doing so at this stage. Will
      * open a ticket.
      */
-    public function getPathAsAssoc($strip = true)
+    public function getPathAsAssoc($strip = true, $rebuild = false)
     {
         $tmp = array();
         $base = $this->getBaseurl(true);
@@ -140,17 +142,19 @@ class Url
             }
         }
 
-        for ($i = 0; $i <= count($params); $i = $i+2) {
-            if (isset($params[$i+1])) {
-                $tmp[(string) $params[$i]] = (string) $params[$i+1];
-            } else {
-                if (isset($params[$i])) {
-                    $this->_stash = (string) $params[$i];
+        if (empty($this->_urlAsAssoc) || $rebuild) {
+            for ($i = 0; $i <= count($params); $i = $i+2) {
+                if (isset($params[$i+1])) {
+                    $this->_urlAsAssoc[(string) $params[$i]] = (string) $params[$i+1];
+                } else {
+                    if (isset($params[$i])) {
+                        $this->_stash = (string) $params[$i];
+                    }
+                    break;
                 }
-                break;
             }
         }
-        return $tmp;
+        return $this->_urlAsAssoc;
     }
 
     public function getStash()
