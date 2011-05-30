@@ -46,7 +46,16 @@ class Url
      *
      * @var array
      */
-    private $_parsedUrl;
+    private $_parsedUrl = array(
+        'scheme'    => 'http',
+        'host'      => '',
+        'port'      => '',
+        'user'      => '',
+        'pass'      => '',
+        'path'      => '',
+        'query'     => '',
+        'fragment'  => ''
+    );
 
     /**
      * The original url string.
@@ -69,6 +78,10 @@ class Url
      */
     private $_stash;
 
+    /**
+     * Save a cached version of our associative representation
+     * of the url.
+     */
     private $_urlAsAssoc = array();
 
     /**
@@ -78,10 +91,7 @@ class Url
      */
     public function __construct($url = null)
     {
-        if ($url === null) {
-            // get uri from $_SERVER
-        } else {
-
+        if ($url !== null) {
             /**
              * A regex is required to validate the format
              * of this $url string. Failure to do so could
@@ -93,11 +103,179 @@ class Url
     }
 
     /**
+     * Store the scheme
+     *
+     * @var string
+     */
+    public function setScheme($scheme)
+    {
+        $this->_parsedUrl['scheme'] = $scheme;
+        return $this;
+    }
+
+    /**
+     * Retrieve the url scheme
+     *
+     * @return string
+     */
+    public function getScheme()
+    {
+        return $this->_parsedUrl['scheme'];
+    }
+
+    /**
+     * Store the host portion of the url.
+     *
+     * @var string
+     */
+    public function setHost($host)
+    {
+        $this->_parsedUrl['host'] = $host;
+        return $this;
+    }
+
+    /**
+     * Retrieve the host portion of the url.
+     *
+     * @return string
+    */
+    public function getHost()
+    {
+        return $this->_parsedUrl['host'];
+    }
+
+    /**
+     * Store the port portion of the url.
+     *
+     * @var string
+     */
+    public function setPort($port)
+    {
+        $this->_parsedUrl['port'] = $port;
+        return $this;
+    }
+
+    /**
+     * Retrieve the port portion of the url.
+     *
+     * @return string
+    */
+    public function getPort()
+    {
+        return $this->_parsedUrl['port'];
+    }
+
+    /**
+     * Store the user portion of the url.
+     *
+     * @var string
+     */
+    public function setUser($user)
+    {
+        $this->_parsedUrl['user'] = $user;
+        return $this;
+    }
+
+    /**
+     * Retrieve the user portion of the url.
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->_parsedUrl['user'];
+    }
+
+    /**
+     * Store the passowrd portion of the url.
+     *
+     * @var string
+     */
+    public function setPass($pass)
+    {
+        $this->_parsedUrl['pass'] = $pass;
+        return $this;
+    }
+
+    /**
+     * Retrieve the password portion of the url.
+     *
+     * @return string
+     */
+    public function getPass()
+    {
+        return $this->_parsedUrl['pass'];
+    }
+
+    /**
+     * Store the path portion of the url.
+     *
+     * @var string
+     */
+    public function setPath($path)
+    {
+        $this->_parsedUrl['path'] = $path;
+    }
+
+    /**
+     * Retrieve the path portion of the url
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->_parsedUrl['path'];
+    }
+
+    /**
+     * Store the query portion of the url.
+     * This is the part after the ?
+     *
+     * @var string
+     */
+    public function setQuery($query)
+    {
+        $this->_parsedUrl['query'] = $query;
+    }
+
+    /**
+     * Retrieve the query portion of the url.
+     *
+     * @return string
+     */
+    public function getQuery()
+    {
+        return $this->_parsedUrl['query'];
+    }
+
+    /**
+     * Store the fragment portion of the url.
+     * The part after any hash #
+     *
+     * @var string
+     */
+    public function setFragment($fragment)
+    {
+        $this->_parsedUrl['fragment'] = $fragment;
+    }
+
+    /**
+     * Retrieve the fragment portion of the url.
+     *
+     * @return string
+     */
+    public function getFragment()
+    {
+        return $this->_parsedUrl['fragment'];
+    }
+
+    /**
      * Set the base url, this will be trimmed from all returned paths.
      *
      * @return \Proem\IO\Url
      */
-    public function setBaseUrl($base) {
+    public function setBaseUrl($base)
+    {
         $this->_baseUrl = $base;
         return $this;
     }
@@ -107,7 +285,8 @@ class Url
      *
      * @return string|array
      */
-    public function getBaseUrl($array = false) {
+    public function getBaseUrl($array = false)
+    {
         if (!$array) {
             return $this->_baseUrl;
         } else {
@@ -123,10 +302,6 @@ class Url
      *
      * @param bool $strip Wether or not to strip the base url from the returned value.
      * @return array
-     *
-     * @todo The result of this function call should likely be cached, I'm not
-     * however quite sure of the conscequences of doing so at this stage. Will
-     * open a ticket.
      */
     public function getPathAsAssoc($strip = true, $rebuild = false)
     {
@@ -172,6 +347,9 @@ class Url
      */
     public function getAsString()
     {
+        if ($this->_urlString == null) {
+            // build the string from our parsedUrl array.
+        }
         return $this->_urlString;
     }
 
@@ -184,24 +362,4 @@ class Url
     {
         return explode('/', trim(str_replace($this->getBaseUrl(), '', $this->getPath()), '/'));
     }
-
-    /**
-     * Magic __call method used to retrieve the contents of the internal
-     * $_parsedUrl array as created via parse_url().
-     *
-     * @link http://php.net/parse_url
-     * @return string|int
-     */
-    public function __call($method, $args)
-    {
-        if (substr($method, 0, 3) == 'get') {
-            $method = substr($method, 3);
-        }
-        $method = strtolower($method);
-        if (array_key_exists($method, $this->_parsedUrl)) {
-            return $this->_parsedUrl[$method];
-        }
-        return false;
-    }
-
 }
