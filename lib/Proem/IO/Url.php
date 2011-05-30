@@ -348,7 +348,30 @@ class Url
     public function getAsString()
     {
         if ($this->_urlString == null) {
-            // build the string from our parsedUrl array.
+            $out = '';
+            if (isset($this->_parsedUrl['schema'])) {
+                $out .= $this->_parsedUrl['schema'] . '://';
+            }
+            if (isset($this->_parsedUrl['user']) && isset($this->_parsedUrl['pass'])) {
+                $out .= $this->_parsedUrl['user'] . ':' . $this->_parsedUrl['pass'] . '@';
+            }
+            if (isset($this->_parsedUrl['host'])) {
+                $out .= $this->_parsedUrl['host'];
+            }
+            if (isset($this->_parsedUrl['port'])) {
+                $out .= ':' . $this->_parsedUrl['port'];
+            }
+            if (isset($this->_parsedUrl['path'])) {
+                $out .= $this->_parsedUrl['path'];
+            }
+            if (isset($this->_parsedUrl['query'])) {
+                $out .= '?' . $this->_parsedUrl['query'];
+            }
+            if (isset($this->_parsedUrl['fragment'])) {
+                $out .= '#' . $this->_parsedUrl['fragment'];
+            }
+            // this needs to be validated.
+            $this->_urlString = $out;
         }
         return $this->_urlString;
     }
