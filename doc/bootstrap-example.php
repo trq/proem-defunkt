@@ -24,15 +24,12 @@ $application = new Proem\Application;
  */
 $application->getChain()->registerEvents(
     array(
-	'request'	=> new Proem\Chain\Event\setupHttpRequest,
-	'response'	=> new Proem\Chain\Event\setupHttpResponse,
-	'route'		=> new Proem\Chain\Event\setupRouter,
-	'dispatch'	=> new Proem\Chain\Event\setupDispatch
-    )    
-);
-
+	    'request'	=> new Proem\Chain\Event\setupHttpRequest,
+	    'response'	=> new Proem\Chain\Event\setupHttpResponse,
+	    'route'		=> new Proem\Chain\Event\setupRouter,
+	    'dispatch'	=> new Proem\Chain\Event\setupDispatch
+    )
 /**
- * Start the application.
- * This simply proxies through to the Chain's run() method.
+ * Boostrap the application by executing the chains events.
  */
-$application->run();
+)->run($application);
