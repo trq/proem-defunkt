@@ -79,10 +79,7 @@ class Loader
      */
     public static function load($class)
     {
-        if (!class_exists($class, false)) {
-            $class = ltrim($class, '\\_');
-            require_once str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, $class) . '.php';
-        }
+        require_once str_replace(array('\\', '_'), DIRECTORY_SEPARATOR, ltrim($class, '\\_')) . '.php';
         return self::$_instance;
     }
 
