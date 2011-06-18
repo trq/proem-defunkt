@@ -2,7 +2,7 @@
 
 option=$1;
 
-version=`grep.exe 'VERSION' ../lib/Proem/Proem.php`
+version=`grep 'VERSION' ../lib/Proem/Proem.php`
 set -- $version
 
 IFS="'"; declare -a Array=($*) 
