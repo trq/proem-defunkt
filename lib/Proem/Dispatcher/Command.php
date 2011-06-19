@@ -80,15 +80,6 @@ class Command
     }
 
     /**
-     * Initialize the _data array.
-     */
-    public function __construct()
-    {
-        $this->_data['controller'] = 'index';
-        $this->_data['action'] = 'index';
-    }
-
-    /**
      * Store a parameter.
      *
      * @param string $name

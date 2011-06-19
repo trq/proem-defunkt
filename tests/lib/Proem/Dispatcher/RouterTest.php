@@ -105,7 +105,7 @@ class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Proem\Dispatcher\Command', $command);
         $this->assertTrue($command->isPopulated());
         $this->assertEquals($controller, $command->getParam('controller'));
-        $this->assertEquals($action, $command->getParam('action'));
+        $this->assertEquals($action, $command->getParam('action', 'index'));
 
 
     }
