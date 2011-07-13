@@ -29,17 +29,4 @@ $application->getChain()->registerEvents(
 	    'route'		=> new Proem\Chain\Event\setupRouter,
 	    'dispatch'	=> new Proem\Chain\Event\setupDispatch
     )
-);
-/**
- * Boostrap the application by executing the chains events.
- * The run() method here simply proxies through to the Chain's
- * run() method, the main reason we use the Application objects
- * version (and avoid method chaining is that it passes the
- * Application object along with it internally, otherwise
- * our call would look something like:
- *
- * $application->getChain()->registerEvents()->run($application);
- *
- * Not real pretty.
- */
-$application->run();
+)->run(); // Start the chain.

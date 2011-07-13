@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -46,8 +46,8 @@ class Chain extends Chain\AbstractChain
     /**
      * Start the Chain in motion.
      */
-    public function run(\Proem\Application $application) {
+    public function run() {
         $event = $this->getInitialEvent();
-        $event->run($this, $application);
+        $event->run($this, $this->_application);
     }
 }

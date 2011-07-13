@@ -1,6 +1,6 @@
 <?php
 /**
- 
+
 The MIT License
 
 Copyright (c) 2010 - 2011 Tony R Quilkey <thorpe@thorpesystems.com>
@@ -38,7 +38,7 @@ namespace Proem\Chain;
 /**
  * An Abstract Chain interface. extend this class to create a Chain
  * responsible for storing, locating and executing Chain Events.
- * 
+ *
  * @category   Proem
  * @package    Proem\Chain\AbstractChain
  */
@@ -50,6 +50,23 @@ abstract class AbstractChain
      * @var array
      */
     protected $_events = array();
+
+    /**
+     * Store an instance of the \Proem\Application object.
+     *
+     * @var \Proem\Application
+     */
+    protected $_application;
+
+    /**
+     * Ensure that a \Proem\Application is passed into the Chain.
+     *
+     * @return void
+     */
+    public function __construct(\Proem\Application $application)
+    {
+        $this->_application = $application;
+    }
 
     /**
      * Register a single Event.
@@ -109,5 +126,5 @@ abstract class AbstractChain
     /**
      * Start the Chain in motion.
      */
-    public abstract function run(\Proem\Application $application);
+    public abstract function run();
 }

@@ -105,19 +105,6 @@ class Application
     }
 
     /**
-     * A simple proxy through to the Chain's run() method.
-     *
-     * This is really only here to make the boostrap process
-     * look nice and clean.
-     *
-     * @return void
-     */
-    public function run()
-    {
-	    $this->getChain()->run($this);
-    }
-
-    /**
      * Set the Request object.
      *
      * @param IO\AbstractRequest $request
