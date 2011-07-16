@@ -25,8 +25,10 @@ lib directory is on php's include_path. That's it !
 
 ## CONTRIBUTING
 
-#### The Twitter Feed
+#### Feeds & IRC
 Proem now has a dedicated twitter feed http://twitter.com/proem which will automatically post any commits as well as news. If you plan on helping out, you should follow this feed.
+
+Also available now is an irc channel (#proem) on freenode. Join if you have any questions.
 
 #### The Issue Tracker
 There are currently 4 types of labels in the bugtracker and they work like this:
