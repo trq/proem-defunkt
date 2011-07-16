@@ -32,8 +32,11 @@ Proem now has a dedicated twitter feed http://twitter.com/proem which will autom
 There are currently 4 types of labels in the bugtracker and they work like this:
 
 proposal: A feature request or idea for new feature implimentation. (These are not to be assigned to any milestone)
+
 candy: A feature, Idea or Proposal which has been determined to be unimportant/not required. Icing on the cake. Being marked as candy means the idea is on the backburner (but not forgotten). (These are not to be assigned to any milestone)
+
 task: A feature, Idea or Proposal which has been accepted and is to be worked on. (These will have a milestone assigned to them).
+
 bug: A bug within current code. These take priority over any other work and where possible should be assigned to the next available milestone.
 
 A new feature or idea should be marked as a 'proposal' and should not be assigned to any milestone. While an issue is a proposal the idea can be fleshed out and commented on until a concrete idea of how it will be implimented is formed. Once that is done and the idea is determined to be viable, the issue will likely be moved to a 'task', or if need be a 'bug' and it will be allocated a milestone.
