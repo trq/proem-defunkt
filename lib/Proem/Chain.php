@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 /**
  * @category   Proem
- * @package    Proem\Chain
+ * @package    Proem\Chain\AbstractChain
  */
 
 /**
@@ -36,13 +36,127 @@ THE SOFTWARE.
 namespace Proem;
 
 /**
- * A concrete Proem\Chain\AbstractChain implementation.
+ * The Proem Boostrap Event Chain.
+ *
+ * Responsible for storing, locating and executing Chain Events.
  *
  * @category   Proem
- * @package    Proem\Chain
+ * @package    Proem
  */
-class Chain extends Chain\AbstractChain
+class Chain
 {
+    /**
+     * Store the Chain Event objects in an associative array.
+     *
+     * @var array
+     */
+    protected $_events = array();
+
+    /**
+     * Store an instance of the \Proem\Application object.
+     *
+     * @var \Proem\Application
+     */
+    protected $_application;
+
+    /**
+     * Ensure that a \Proem\Application is passed into the Chain.
+     *
+     * @return void
+     */
+    public function __construct(\Proem\Application $application)
+    {
+        $this->_application = $application;
+    }
+
+    /**
+     * Register a single Event.
+     *
+     * @param string $event
+     * @param Event\AbstractEvent $object
+     * @return AbstractChain
+     */
+    public function registerEvent($event, Event\AbstractEvent $object) {
+        $this->_events[$event] = $object;
+        return $this;
+    }
+
+    /**
+     * Register multiple events at once.
+     *
+     * @param array $events
+     * @return AbstractChain
+     */
+    public function registerEvents(Array $events) {
+        $this->_events = array_merge($this->_events, $events);
+        return $this;
+    }
+
+    /**
+     * Retrieve all the events currently in the Chain.
+     *
+     * @return array
+     */
+    public function getEvents()
+    {
+        return $this->_events;
+    }
+
+    /**
+     * Inject more events into a specific location within the event chain.
+     *
+     * By default this will inject the events after the $key provided. Supplying
+     * true as the $before argument will place the new events before the suplied $key.
+     *
+     * @param array $events
+     * @param string $key
+     * @param bool $before
+     * @return \Proem\Chain
+     */
+    public function injectEvents(Array $events, $key, $before = false) {
+        $index = array_search($key, array_keys($this->_events));
+        if ($index === FALSE){
+            $index = count($this->_events);
+        } else {
+            if (!$before) {
+                $index++;
+            }
+        }
+        $end = array_splice($this->_events, $index);
+        $this->_events = array_merge($this->_events, $events, $end);
+        return $this;
+    }
+
+    /**
+     * retrieve the first event in the Chain.
+     *
+     * @return array
+     */
+    public function getInitialEvent()
+    {
+        return reset($this->_events);
+    }
+
+    /**
+     * Move the internal pointer to the next event in the Chain and return it.
+     *
+     * @return array
+     */
+    public function getNextEvent()
+    {
+        return next($this->_events);
+    }
+
+    /**
+     * Move the internal pointer to the previous event in the Chain and return it.
+     *
+     * @return array
+     */
+    public function getPreviousEvent()
+    {
+        return prev($this->_events);
+    }
+
     /**
      * Start the Chain in motion.
      */

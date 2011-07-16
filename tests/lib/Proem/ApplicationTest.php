@@ -2,7 +2,6 @@
 
 require_once 'PHPUnit/Autoload.php';
 require_once 'lib/Proem/Application.php';
-require_once 'lib/Proem/Chain/AbstractChain.php';
 require_once 'lib/Proem/Chain/Event/AbstractEvent.php';
 require_once 'lib/Proem/Chain.php';
 
@@ -20,7 +19,7 @@ class Proem_ApplicationTest extends PHPUnit_Framework_TestCase
     public function testChainIsAvailable()
     {
         $this->assertInstanceOf(
-            'Proem\Chain\AbstractChain',
+            'Proem\Chain',
             $this->_application->getChain()
         );
     }

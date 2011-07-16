@@ -88,7 +88,7 @@ class Application
      * @param Chain\AbstractChain $chain
      * @return Proem\Application
      */
-    public function setChain(Chain\AbstractChain $chain)
+    public function setChain(Chain $chain)
     {
         $this->_chain = $chain;
         return $this;
