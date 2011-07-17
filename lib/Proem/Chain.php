@@ -70,29 +70,6 @@ class Chain
     }
 
     /**
-     * Register a single Event.
-     *
-     * @param string $event
-     * @param Event\AbstractEvent $object
-     * @return AbstractChain
-     */
-    public function registerEvent($event, Event\AbstractEvent $object) {
-        $this->_events[$event] = $object;
-        return $this;
-    }
-
-    /**
-     * Register multiple events at once.
-     *
-     * @param array $events
-     * @return AbstractChain
-     */
-    public function registerEvents(Array $events) {
-        $this->_events = array_merge($this->_events, $events);
-        return $this;
-    }
-
-    /**
      * Retrieve all the events currently in the Chain.
      *
      * @return array
@@ -103,27 +80,36 @@ class Chain
     }
 
     /**
-     * Inject more events into a specific location within the event chain.
+     * Register events with the chain.
      *
-     * By default this will inject the events after the $key provided. Supplying
-     * true as the $before argument will place the new events before the suplied $key.
+     * If no key is provided the events will be added to the end of the chain.
+     *
+     * If a $key is provided, by default this will inject the events after
+     * the $key. Supplying true as the $before argument will place the new
+     * events before the suplied $key.
+     *
+     * If a $key is provided but not found, and Exception is thrown.
      *
      * @param array $events
      * @param string $key
      * @param bool $before
      * @return \Proem\Chain
      */
-    public function injectEvents(Array $events, $key, $before = false) {
-        $index = array_search($key, array_keys($this->_events));
-        if ($index === FALSE){
-            $index = count($this->_events);
-        } else {
-            if (!$before) {
-                $index++;
+    public function registerEvents(Array $events, $key = false, $before = false) {
+        if ($key) {
+            $index = array_search($key, array_keys($this->_events));
+            if ($index === false){
+                throw Exception("The $key event was not found in the Chain");
+            } else {
+                if (!$before) {
+                    $index++;
+                }
             }
+            $end = array_splice($this->_events, $index);
+            $this->_events = array_merge($this->_events, $events, $end);
+        } else {
+            $this->_events = array_merge($this->_events, $events);
         }
-        $end = array_splice($this->_events, $index);
-        $this->_events = array_merge($this->_events, $events, $end);
         return $this;
     }
 

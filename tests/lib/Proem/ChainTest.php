@@ -7,18 +7,14 @@ require_once 'lib/Proem/Chain.php';
 
 class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
 {
-
-    /**
     public function testCanRegisterSingleEvent() {
         $chain = new Proem\Chain(new Proem\Application);
 
         $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
 
-        $chain->registerEvent('request', $request);
-
+        $chain->registerEvents(array('request' => $request));
         $this->assertArrayHasKey('request', $chain->getEvents());
     }
-     */
 
     public function testCanRegisterMultipleEvents() {
         $chain = new Proem\Chain(new Proem\Application);
@@ -91,7 +87,7 @@ class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
 
         $chain->registerEvents($events);
 
-        $chain->injectEvents(array('response' => $response), 'request');
+        $chain->registerEvents(array('response' => $response), 'request');
 
         $this->expectOutputString('request in, response in, dispatch in, dispatch out, response out, request out');
         $chain->run();
