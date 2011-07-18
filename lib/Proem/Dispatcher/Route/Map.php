@@ -76,9 +76,11 @@ class Map extends AbstractRoute
      */
     public function process(\Proem\IO\Url $url, $options = array())
     {
-        // A standard rule.
-        $rule = isset($options['rule']) ? $options['rule'] : '/:controller/:action/:params';
+        if (!isset($options['rule'])) {
+            return false;
+        }
 
+        $rule = $options['rule'];
         $target = isset($options['target']) ? $options['target'] : array();
         $filter = isset($options['filter']) ? $options['filter'] : array();
 

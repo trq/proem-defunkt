@@ -10,19 +10,6 @@ require_once 'lib/Proem/Dispatcher/Router.php';
 
 class ProemControllerRouterTest extends PHPUnit_Framework_TestCase
 {
-    public function testDefaultMapedRoute()
-    {
-        $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com/foo/bar/a/b'));
-        $command = $router->map(
-            'default',
-            new \Proem\Dispatcher\Route\Map
-        )->route();
-
-        $this->assertEquals('foo', $command->getParam('controller'));
-        $this->assertEquals('bar', $command->getParam('action'));
-        $this->assertEquals('b', $command->getParam('a'));
-    }
-
     public function testVerboseDefaultMapedRoute()
     {
         $router = new \Proem\Dispatcher\Router(new \Proem\IO\Url('http://domain.com/foo/bar/a/b'));
