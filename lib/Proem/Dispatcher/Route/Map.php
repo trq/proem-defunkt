@@ -123,7 +123,7 @@ class Map extends AbstractRoute
                 // If the string within $value looks like a / seperated string,
                 // parse it into an array and send it to setParams() instead
                 // of the singular setParam.
-                if (strpos($value, '/') !== false) {
+                if ($key == 'params' && strpos($value, '/') !== false) {
                     $this->getCommand()->setParams($this->createAssocArray($value));
                 } else {
                     $this->getCommand()->setParam($key, $value);
