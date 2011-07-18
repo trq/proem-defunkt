@@ -48,6 +48,40 @@ namespace Proem\Dispatcher\Route;
 class Map extends AbstractRoute
 {
     /**
+     * Pattern used to match initial string.
+     */
+    const INITIAL_MATCH_ALL = '@:([\w]+)@';
+
+    /**
+     * Callback replace pattern.
+     */
+    const CALLBACK_REPLACE = '@:[\w]+@';
+
+    /**
+     * Store our default filters.
+     */
+    private $_default_filters = array();
+
+    /**
+     * Instantiate object & setup default filters.
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->_default_filters = array(
+            'year'       => '[12][0-9]{3}',
+            'month'      => '0[1-9]|1[012]',
+            'day'        => '0[1-9]|[12][0-9]|3[01]',
+            'num'        => '[0-9]+',
+            'alpha'      => '[a-zA-Z]+',
+            'slug'       => '[a-zA-Z0-9_-]+',
+            'module'     => '[a-zA-Z0-9_\+\-%]+',
+            'controller' => '[a-zA-Z0-9_\+\-%]+',
+            'action'     => '[a-zA-Z0-9_\+\-%]+',
+            'params'     => '[a-zA-Z0-9_\+\-%\/]+'
+        );
+    }
+
+    /**
      * Process the gievn url.
      *
      * This route takes a simplified series of patterns such as :controller and
@@ -80,9 +114,10 @@ class Map extends AbstractRoute
             return false;
         }
 
-        $rule = $options['rule'];
-        $target = isset($options['target']) ? $options['target'] : array();
-        $filter = isset($options['filter']) ? $options['filter'] : array();
+        $rule            = $options['rule'];
+        $target          = isset($options['target']) ? $options['target'] : array();
+        $custom_filters  = isset($options['filter']) ? $options['filter'] : array();
+        $default_filters = $this->_default_filters;
 
         $keys = array();
         $values = array();
@@ -93,15 +128,13 @@ class Map extends AbstractRoute
 
         $regex = preg_replace_callback(
             '@:[\w]+@',
-            function($matches) use ($filter)
+            function($matches) use ($custom_filters, $default_filters)
             {
                 $key = str_replace(':', '', $matches[0]);
-                if (array_key_exists($key, $filter)) {
-                    return '(' . $filter[$key] . ')';
-                } else if ($key == 'params') {
-                    return '([a-zA-Z0-9_\+\-%\/]+)';
-                } else {
-                    return '([a-zA-Z0-9_\+\-%]+)';
+                if (array_key_exists($key, $custom_filters)) {
+                    return '(' . $custom_filters[$key] . ')';
+                } else if (array_key_exists($key, $default_filters)) {
+                    return '(' . $default_filters[$key] . ')';
                 }
             },
             $rule
