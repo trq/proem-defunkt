@@ -69,11 +69,17 @@ class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
     public function testChainEventInjection() {
         $chain = new Proem\Chain(new Proem\Application);
 
-        $this->_request->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "request in, ";}));
-        $this->_request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
-
         $this->_response->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "response in, ";}));
         $this->_response->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "response out, ";}));
+
+        $response = $this->_response;
+
+        $this->_request->expects($this->once())->method('in')->will($this->returnCallback(function() use ($chain, $response) {
+            echo "request in, ";
+            $chain->registerEvents(array('response' => $response), 'request');
+        }));
+
+        $this->_request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
 
         $this->_dispatch->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "dispatch in, ";}));
         $this->_dispatch->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "dispatch out, ";}));
@@ -84,8 +90,6 @@ class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
         );
 
         $chain->registerEvents($events);
-
-        $chain->registerEvents(array('response' => $this->_response), 'request');
 
         $this->expectOutputString('request in, response in, dispatch in, dispatch out, response out, request out');
         $chain->run();
