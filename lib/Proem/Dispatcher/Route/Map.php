@@ -48,36 +48,37 @@ namespace Proem\Dispatcher\Route;
 class Map extends AbstractRoute
 {
     /**
-     * Pattern used to match initial string.
+     * Store default tokens..
      */
-    const INITIAL_MATCH_ALL = '@:([\w]+)@';
+    private $_default_tokens = array();
 
     /**
-     * Callback replace pattern.
+     * Store default filters.
      */
-    const CALLBACK_REPLACE = '@:[\w]+@';
-
-    /**
-     * Store our default filters.
-     */
-    private $_default_filters = array();
+    private $default_filters = array();
 
     /**
      * Instantiate object & setup default filters.
      */
     public function __construct() {
         parent::__construct();
+
         $this->_default_filters = array(
-            'year'       => '[12][0-9]{3}',
-            'month'      => '0[1-9]|1[012]',
-            'day'        => '0[1-9]|[12][0-9]|3[01]',
-            'num'        => '[0-9]+',
-            'alpha'      => '[a-zA-Z]+',
-            'slug'       => '[a-zA-Z0-9_-]+',
-            'module'     => '[a-zA-Z0-9_\+\-%]+',
-            'controller' => '[a-zA-Z0-9_\+\-%]+',
-            'action'     => '[a-zA-Z0-9_\+\-%]+',
-            'params'     => '[a-zA-Z0-9_\+\-%\/]+'
+            ':default'  => '[a-zA-Z0-9_\+\-%]+',
+            ':gobble'   => '[a-zA-Z0-9_\+\-%\/]+',
+            ':year'     => '[12][0-9]{3}',
+            ':month'    => '0[1-9]|1[012]',
+            ':day'      => '0[1-9]|[12][0-9]|3[01]',
+            ':num'      => '[0-9]+',
+            ':alpha'    => '[a-zA-Z]+',
+            ':slug'     => '[a-zA-Z0-9_-]+'
+        );
+
+        $this->_default_tokens = array(
+            'module'     => $this->_default_filters[':default'],
+            'controller' => $this->_default_filters[':default'],
+            'action'     => $this->_default_filters[':default'],
+            'params'     => $this->_default_filters[':gobble']
         );
     }
 
@@ -117,7 +118,11 @@ class Map extends AbstractRoute
         $rule            = $options['rule'];
         $target          = isset($options['target']) ? $options['target'] : array();
         $custom_filters  = isset($options['filter']) ? $options['filter'] : array();
-        $default_filters = $this->_default_filters;
+
+        // Need to be saved locally so we can easily
+        // pass them to the callback below.
+        $default_tokens     = $this->_default_tokens;
+        $default_filters    = $this->_default_filters;
 
         $keys = array();
         $values = array();
@@ -128,13 +133,19 @@ class Map extends AbstractRoute
 
         $regex = preg_replace_callback(
             '@:[\w]+@',
-            function($matches) use ($custom_filters, $default_filters)
+            function($matches) use ($custom_filters, $default_tokens, $default_filters)
             {
                 $key = str_replace(':', '', $matches[0]);
                 if (array_key_exists($key, $custom_filters)) {
-                    return '(' . $custom_filters[$key] . ')';
-                } else if (array_key_exists($key, $default_filters)) {
-                    return '(' . $default_filters[$key] . ')';
+                    if (array_key_exists($custom_filters[$key], $default_filters)) {
+                        return '(' . $default_filters[$custom_filters[$key]] . ')';
+                    } else {
+                        return '(' . $custom_filters[$key] . ')';
+                    }
+                } else if (array_key_exists($key, $default_tokens)) {
+                    return '(' . $default_tokens[$key] . ')';
+                } else {
+                    return $default_filters['default'];
                 }
             },
             $rule

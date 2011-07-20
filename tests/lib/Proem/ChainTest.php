@@ -7,26 +7,30 @@ require_once 'lib/Proem/Chain.php';
 
 class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
 {
+    private $_request;
+    private $_response;
+    private $_dispatch;
+
+    public function setUp() {
+        $this->_request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
+        $this->_response = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
+        $this->_dispatch = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
+    }
+
     public function testCanRegisterSingleEvent() {
         $chain = new Proem\Chain(new Proem\Application);
 
-        $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-
-        $chain->registerEvents(array('request' => $request));
+        $chain->registerEvents(array('request' => $this->_request));
         $this->assertArrayHasKey('request', $chain->getEvents());
     }
 
     public function testCanRegisterMultipleEvents() {
         $chain = new Proem\Chain(new Proem\Application);
 
-        $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $response = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $dispatch = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-
         $events = array(
-            'request' => $request,
-            'response' => $response,
-            'dispatch' => $dispatch
+            'request' => $this->_request,
+            'response' => $this->_response,
+            'dispatch' => $this->_dispatch
         );
 
         $chain->registerEvents($events);
@@ -40,22 +44,19 @@ class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
     public function testChainRun() {
         $chain = new Proem\Chain(new Proem\Application);
 
-        $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $request->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "request in, ";}));
-        $request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
+        $this->_request->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "request in, ";}));
+        $this->_request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
 
-        $response = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $response->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "response in, ";}));
-        $response->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "response out, ";}));
+        $this->_response->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "response in, ";}));
+        $this->_response->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "response out, ";}));
 
-        $dispatch = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $dispatch->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "dispatch in, ";}));
-        $dispatch->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "dispatch out, ";}));
+        $this->_dispatch->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "dispatch in, ";}));
+        $this->_dispatch->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "dispatch out, ";}));
 
         $events = array(
-            'request' => $request,
-            'response' => $response,
-            'dispatch' => $dispatch
+            'request' => $this->_request,
+            'response' => $this->_response,
+            'dispatch' => $this->_dispatch
         );
 
         $chain->registerEvents($events);
@@ -68,26 +69,23 @@ class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
     public function testChainEventInjection() {
         $chain = new Proem\Chain(new Proem\Application);
 
-        $request = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $request->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "request in, ";}));
-        $request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
+        $this->_request->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "request in, ";}));
+        $this->_request->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "request out";}));
 
-        $response = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $response->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "response in, ";}));
-        $response->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "response out, ";}));
+        $this->_response->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "response in, ";}));
+        $this->_response->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "response out, ";}));
 
-        $dispatch = $this->getMockForAbstractClass('Proem\Chain\Event\AbstractEvent');
-        $dispatch->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "dispatch in, ";}));
-        $dispatch->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "dispatch out, ";}));
+        $this->_dispatch->expects($this->once())->method('in')->will($this->returnCallback(function() {echo "dispatch in, ";}));
+        $this->_dispatch->expects($this->once())->method('out')->will($this->returnCallback(function() {echo "dispatch out, ";}));
 
         $events = array(
-            'request' => $request,
-            'dispatch' => $dispatch
+            'request' => $this->_request,
+            'dispatch' => $this->_dispatch
         );
 
         $chain->registerEvents($events);
 
-        $chain->registerEvents(array('response' => $response), 'request');
+        $chain->registerEvents(array('response' => $this->_response), 'request');
 
         $this->expectOutputString('request in, response in, dispatch in, dispatch out, response out, request out');
         $chain->run();
