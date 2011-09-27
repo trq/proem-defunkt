@@ -8,5 +8,4 @@
 > r. ME proheme < MF < L, as above
 
 Website:            http://proemframework.org
-Issue tracker:      http://issues.proemframwork.org
 Code:               http://github.com/trq/proem
