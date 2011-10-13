@@ -95,7 +95,8 @@ class Chain
      * @param bool $before
      * @return \Proem\Chain
      */
-    public function registerEvents(Array $events, $key = false, $before = false) {
+    public function registerEvents(Array $events, $key = false, $before = false)
+    {
         if ($key) {
             $index = array_search($key, array_keys($this->_events));
             if ($index === false){
@@ -146,7 +147,8 @@ class Chain
     /**
      * Start the Chain in motion.
      */
-    public function run() {
+    public function run()
+    {
         $event = $this->getInitialEvent();
         $event->run($this, $this->_application);
     }
