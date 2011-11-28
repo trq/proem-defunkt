@@ -5,7 +5,7 @@ require_once 'lib/Proem/Application.php';
 require_once 'lib/Proem/Chain/Event/AbstractEvent.php';
 require_once 'lib/Proem/Chain.php';
 
-class Proem_ChainTest extends PHPUnit_Extensions_OutputTestCase
+class Proem_ChainTest extends PHPUnit_Framework_TestCase
 {
     private $_request;
     private $_response;

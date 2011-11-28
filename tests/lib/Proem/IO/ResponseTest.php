@@ -9,26 +9,26 @@ class Proem_ResponseTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-	parent::setUp();
-
-	$this->_response = new Proem\IO\Response;
+	    parent::setUp();
+        $this->_response = new Proem\IO\Response;
+        $this->_response->setBody('foo');
     }
 
-    public function testCanSetAndGetBody()
+    public function testInstance()
     {
-	$this->assertInstanceOf(
+	    $this->assertInstanceOf(
             'Proem\IO\Response',
-            $this->_response->setBody('foo')
+            $this->_response
         );
 
-	$this->assertEquals('foo', $this->_response->getBody());
+	    $this->assertEquals('foo', $this->_response->getBody());
     }
 
     public function testCanSend()
     {
         ob_start();
         $this->_response->send();
-        $ob = ob_end_clean();
+        $ob = ob_get_clean();
 
         $this->assertEquals('foo', $ob);
     }
@@ -37,7 +37,7 @@ class Proem_ResponseTest extends PHPUnit_Framework_TestCase
     {
         ob_start();
         echo $this->_response;
-        $ob = ob_end_clean();
+        $ob = ob_get_clean();
 
         $this->assertEquals('foo', $ob);
     }
