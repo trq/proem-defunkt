@@ -9,3 +9,4 @@
 
 Website:            http://proemframework.org
 Code:               http://github.com/trq/proem
+CI:                 http://travis-ci.org/#!/trq/proem
