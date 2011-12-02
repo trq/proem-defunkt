@@ -1,4 +1,7 @@
-# pro·em
+#pro·em
+
+[![project status](http://stillmaintained.com/trq/proem.png)](http://stillmaintained.com/trq/proem)
+[![Build Status](https://secure.travis-ci.org/trq/proem.png)](http://travis-ci.org/trq/proem)
 
 > –noun
 > an introductory discourse; introduction; preface; preamble.
