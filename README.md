@@ -1,1 +1,1 @@
-Proem is being reworked and can now be found @ http://github.com/proem/Proem
+Proem is being reworked and can now be found @ http://github.com/proem/proem
